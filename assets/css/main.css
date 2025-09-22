@@ -1,0 +1,15 @@
+@import 'tailwindcss';
+@import '@nuxt/ui';
+
+html,
+body {
+  background-color: white; /* Ganti dengan warna yang diinginkan, misalnya dark blue */
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  color: black;
+}
+#__nuxt,
+.nuxt-root {
+  height: 100%;
+}
