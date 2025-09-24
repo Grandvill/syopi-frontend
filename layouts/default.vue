@@ -3,7 +3,8 @@
     <header class="header-orange">
       <div class="header-top">
         <UContainer class="header-top-container">
-          <span>Login</span>
+          <UButton color="gray" variant="ghost" label="Daftar" />
+          <UButton color="gray" variant="ghost" label="Login" />
         </UContainer>
       </div>
       <div class="header-bottom"></div>
