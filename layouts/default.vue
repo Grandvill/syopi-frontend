@@ -10,7 +10,7 @@
       <div class="header-bottom">
         <UContainer class="header-bottom-container">
           <BaseLogo />
-          <div>Search Bar</div>
+          <LayoutsSearchBar class="flex-1" />
           <div>Cart Button</div>
         </UContainer>
       </div>
@@ -55,7 +55,7 @@
 }
 
 .header-bottom-container {
-  @apply flex justify-between items-center;
+  @apply flex justify-between items-center gap-10;
   @apply h-full;
 }
 </style>
