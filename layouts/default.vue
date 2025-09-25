@@ -9,7 +9,7 @@
       </div>
       <div class="header-bottom">
         <UContainer class="header-bottom-container">
-          <div>Logo</div>
+          <BaseLogo />
           <div>Search Bar</div>
           <div>Cart Button</div>
         </UContainer>
