@@ -3,8 +3,8 @@
     <header class="header-orange">
       <div class="header-top">
         <UContainer class="header-top-container">
-          <UButton color="white" variant="link" :padded="false" label="Daftar" />
-          <UButton color="white" variant="link" :padded="false" label="Login" />
+          <UButton color="white" variant="link" :padded="false" class="px-3">Daftar</UButton>
+          <UButton color="white" variant="link" :padded="false" class="px-3">Login</UButton>
         </UContainer>
       </div>
       <div class="header-bottom">
@@ -41,7 +41,7 @@
 }
 
 .header-orange .header-top {
-  @apply bg-orange-600 py-2;
+  @apply bg-primary py-2;
 }
 
 .header-top-container {
@@ -50,7 +50,7 @@
 }
 
 .header-orange .header-bottom {
-  @apply bg-gradient-to-b from-orange-600 to-[#FF6633];
+  @apply bg-gradient-to-b from-primary to-[#FF6633];
   @apply flex-1;
 }
 
