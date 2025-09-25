@@ -1,14 +1,11 @@
 export default defineAppConfig({
   ui: {
-    primary: 'orange-500',
+    primary: 'orange',
     button: {
       rounded: 'rounded-sm',
       padding: {
-        sm: 'py-3',
+        sm: 'py-3 px-5',
       },
-    },
-    colors: {
-      primary: 'orange-500', // Tambahan eksplisit
     },
   },
 });
