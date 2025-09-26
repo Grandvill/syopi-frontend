@@ -13,7 +13,7 @@
 @reference "tailwindcss";
 
 .default-layout {
-  @apply flex flex-col min-h-screen bg-red-200;
+  @apply flex flex-col min-h-screen;
 }
 
 .main-layout {

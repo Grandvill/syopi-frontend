@@ -1,11 +1,23 @@
 <template>
   <footer class="footer">
     <UContainer class="footer-container">
-      <p class="text-sm text-gray-500">© 2024 Syopi. All rights reserved.</p>
+      <div class="footer-top"></div>
+      <div class="footer-bottom"></div>
     </UContainer>
   </footer>
 </template>
 
 <script setup></script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.footer {
+  @apply border-t-4 border-primary;
+  @apply bg-gray-50;
+}
+
+.footer-container {
+  @apply flex flex-col;
+  @apply py-6;
+  @apply gap-6;
+}
+</style>
