@@ -5,7 +5,7 @@
       <slot />
     </main>
 
-    <footer>Footer</footer>
+    <LayoutsFooter />
   </div>
 </template>
 
