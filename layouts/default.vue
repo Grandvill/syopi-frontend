@@ -55,7 +55,7 @@
 }
 
 .header-bottom-container {
-  @apply flex justify-between items-center gap-10;
+  @apply flex justify-between items-center gap-12;
   @apply h-full;
 }
 </style>

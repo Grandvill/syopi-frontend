@@ -3,6 +3,9 @@ import type { Config } from 'tailwindcss';
 export default <Partial<Config>>{
   content: ['./app.vue', './pages/**/*.{js,ts,vue}', './components/**/*.{js,ts,vue}'],
   theme: {
+    fontFamily: {
+      sans: ['Roboto', 'system-ui'], //kalo ga ada Roboto, otomatis pake system-ui
+    },
     extend: {
       colors: {
         orange: {

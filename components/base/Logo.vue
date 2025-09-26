@@ -7,6 +7,6 @@
 <style>
 @reference "tailwindcss";
 .logo {
-  @apply text-4xl;
+  @apply text-4xl font-normal;
 }
 </style>

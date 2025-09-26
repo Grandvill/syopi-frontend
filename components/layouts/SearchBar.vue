@@ -2,7 +2,7 @@
 <template>
   <div class="searchbar">
     <input placeholder="CEK: Flash Sale Rp17 Lokal!" class="search-input" />
-    <UButton icon="i-heroicons:magnifying-glass" />
+    <UButton icon="i-heroicons:magnifying-glass" class="px-6" />
   </div>
 </template>
 
