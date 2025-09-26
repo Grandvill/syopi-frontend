@@ -11,7 +11,9 @@
         <UContainer class="header-bottom-container">
           <BaseLogo />
           <LayoutsSearchBar class="flex-1" />
-          <div>Cart Button</div>
+          <UButton>
+            <IconCart variant="link" />
+          </UButton>
         </UContainer>
       </div>
     </header>
