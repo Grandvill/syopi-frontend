@@ -140,7 +140,15 @@
           </div>
         </div>
       </div>
-      <div class="footer-bottom"></div>
+      <div class="footer-bottom">
+        <p class="footer-text">© 2025 Syopi. Hak Cipta Dilindungi</p>
+        <div class="flex items-center gap-1">
+          <span class="footer-text">Negara:</span>
+          <div class="flex divide-x divide-black/20">
+            <UButton v-for="item in country" :key="item" variant="link" class="footer-text px-1.5" :padded="false">{{ item }}</UButton>
+          </div>
+        </div>
+      </div>
     </UContainer>
   </footer>
 </template>
@@ -149,6 +157,8 @@
 const layananPengguna = ['Bantuan', 'Metode Pembayaran', 'SyopoPay', 'Koin Syopo', 'Lacak Pesanan Pembeli', 'Lacak Pengiriman Penjual', 'Gratis Ongkir', 'Pengembalian Barang & Dana', 'Garansi Syopo', 'Hubungi Kami'];
 
 const jelajahi = ['Tentang Kami', 'Karir', 'Kebijakan Syopo', 'Kebijakan Privasi', 'Blog', 'Syopo Mall', 'Seller Center', 'Flash Sale', 'Kontak Media', 'Syopo Affiliate'];
+
+const country = ['Singapura', 'Indonesia', 'Thailand', 'Malaysia', 'Vietnam', 'Filipina', 'Brazil', 'Mexico', 'Colombia', 'Chile', 'Taiwan'];
 </script>
 
 <style scoped>
@@ -165,6 +175,7 @@ const jelajahi = ['Tentang Kami', 'Karir', 'Kebijakan Syopo', 'Kebijakan Privasi
 .footer-top {
   @apply grid grid-cols-5; /* maksimal 5 kolom, jika lebih maka akan mengikuti ukuran layar/ke bawah */
   @apply pt-11 pb-8;
+  @apply border-b;
 }
 
 .footer h3 {
@@ -184,5 +195,10 @@ const jelajahi = ['Tentang Kami', 'Karir', 'Kebijakan Syopo', 'Kebijakan Privasi
 
 .footer-item.size-lg {
   @apply w-[112px] h-[52px];
+}
+
+.footer-bottom {
+  @apply py-10;
+  @apply flex justify-between;
 }
 </style>
