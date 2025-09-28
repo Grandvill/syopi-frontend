@@ -1,11 +1,6 @@
 <template>
   <header class="header-orange">
-    <div class="header-top">
-      <UContainer class="header-top-container">
-        <UButton color="white" variant="link" :padded="false" class="px-3">Daftar</UButton>
-        <UButton color="white" variant="link" :padded="false" class="px-3">Login</UButton>
-      </UContainer>
-    </div>
+    <LayoutsHeaderProfile />
     <div class="header-bottom">
       <UContainer class="header-bottom-container">
         <BaseLogo />
