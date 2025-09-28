@@ -1,6 +1,6 @@
 <template>
   <div class="auth-layout">
-    <header>Header</header>
+    <LayoutsHeaderWhite />
     <main class="main-layout"><slot /></main>
     <LayoutsFooter />
   </div>

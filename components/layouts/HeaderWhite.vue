@@ -1,6 +1,6 @@
 <template>
   <header class="header-white">
-    <div class="header-top"></div>
+    <LayoutsHeaderProfile />
     <div class="header-bottom"></div>
   </header>
 </template>

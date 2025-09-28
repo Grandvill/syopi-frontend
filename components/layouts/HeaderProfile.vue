@@ -13,7 +13,7 @@
 @reference "tailwindcss";
 
 .header-profile {
-  @apply bg-primary py-2;
+  @apply bg-primary py-2 text-white;
 }
 
 .header-profile-container {
