@@ -1,16 +1,44 @@
 <!-- SearchBar.vue -->
 <template>
-  <div class="searchbar">
+  <div :class="['searchbar', { 'no-padded': !padded }]">
     <input placeholder="CEK: Flash Sale Rp17 Lokal!" class="search-input" />
-    <UButton icon="i-heroicons:magnifying-glass" class="px-6" />
+    <UButton icon="i-heroicons:magnifying-glass" class="px-6" v-bind="attribute" />
   </div>
 </template>
+
+<script setup>
+const props = defineProps({
+  padded: {
+    type: Boolean,
+    default: true,
+  },
+});
+
+const attribute = computed(() => {
+  if (!props.padded) {
+    return {
+      ui: {
+        rounded: 'rounded-none',
+      },
+    };
+  }
+  return {};
+});
+</script>
 
 <style scoped>
 @reference "tailwindcss";
 
 .searchbar {
-  @apply bg-white p-1 flex items-center rounded-sm;
+  @apply bg-white flex items-center rounded-sm text-black;
+}
+
+.searchbar:not(.no-padded) {
+  @apply p-1;
+}
+
+.searchbar.no-padded {
+  @apply border-2 border-primary;
 }
 
 .search-input {
