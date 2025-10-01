@@ -5,10 +5,11 @@
 <script setup>
 definePageMeta({
   layout: 'seller',
-  header: {
-    showProfile: true,
-    title: 'Produk',
-  },
+  breadcrumb: [
+    {
+      label: 'Voucher',
+    },
+  ],
 });
 </script>
 

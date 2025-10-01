@@ -1,6 +1,6 @@
 <template>
   <header class="header-seller">
-    <UBreadcrumb :links="links" :ui="ui" />
+    <UBreadcrumb :links="breadcrumb" :ui="ui" />
   </header>
 </template>
 
@@ -14,17 +14,17 @@ const breadcrumb = computed(() => {
   }
   return [...defaultBreadcrumb, ...route.meta.breadcrumb];
 });
-const links = [
-  {
-    label: 'Home',
-  },
-  {
-    label: 'Navigation',
-  },
-  {
-    label: 'Breadcrumb',
-  },
-];
+// const links = [
+//   {
+//     label: 'Home',
+//   },
+//   {
+//     label: 'Navigation',
+//   },
+//   {
+//     label: 'Breadcrumb',
+//   },
+// ];
 
 const ui = {
   active: 'text-slate-800 dark:text-slate-800 ',
