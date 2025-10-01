@@ -32,6 +32,21 @@ const sidebarItems = computed(() => [
       },
     ],
   },
+  {
+    label: 'Voucher',
+    icon: 'i-heroicons:receipt-percent',
+    to: '/seller/voucher',
+  },
+  {
+    label: 'Keuangan',
+    icon: 'i-heroicons:banknotes',
+    children: [
+      {
+        label: 'Saldo Saya',
+        to: '/seller/balance',
+      },
+    ],
+  },
 ]);
 </script>
 
