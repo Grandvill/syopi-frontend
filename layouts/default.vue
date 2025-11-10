@@ -17,6 +17,6 @@
 }
 
 .main-layout {
-  @apply flex-1 bg-slate-300;
+  @apply flex-1 bg-[#F5F5F5];
 }
 </style>
