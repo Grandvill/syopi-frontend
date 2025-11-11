@@ -12,7 +12,12 @@
               <h2>Kategori</h2>
             </div>
             <div class="category-section-content">
-              <NuxtLink class="category-item"></NuxtLink>
+              <FeatureHomepageCategoryItem
+              v-for="i in 20"
+              :key="`cat-${i}`"
+                title="elektronik"
+                image="/images/kategori/elektronik.png"
+              />
             </div>
         </div>
       </UContainer>
@@ -53,10 +58,5 @@ const items = [
 
 .category-section-content {
   @apply grid grid-cols-10;
-}
-
-.category-item {
-  @apply p-2;
-  @apply border-b border-r border-black/5;
 }
 </style>
