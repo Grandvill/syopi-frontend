@@ -22,7 +22,16 @@
         </div>
       </UContainer>
     </section>
-    <section class="product-section"></section>
+    <section class="product-section">
+      <UContainer>
+        <div class="product-section-header">
+          <h2>Rekomendasi</h2>
+        </div>
+        <div class="product-section-content">
+          <BaseProductCard />
+        </div>
+      </UContainer>
+    </section>
   </div>
 </template>
 
@@ -58,5 +67,22 @@ const items = [
 
 .category-section-content {
   @apply grid grid-cols-10;
+}
+
+.product-section-header {
+  @apply bg-white;
+  @apply border-b-4 border-primary;
+  @apply p-5;
+}
+
+.product-section-header h2 {
+  @apply text-base text-primary font-medium;
+  @apply text-center;
+  @apply uppercase;
+}
+
+.product-section-content {
+  @apply grid grid-cols-6 gap-3;
+  @apply mt-3;
 }
 </style>
