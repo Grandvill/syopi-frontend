@@ -1,24 +1,63 @@
 <template>
     <NuxtLink class="product-card" to="/">
-        <img src="../../public/images/rekomendasi/sepatu.png" />
+        <div v-if="discount" class="product-discount">-{{ formattedDiscount }}%</div>
+        <img :src="image" />
         <div class="product-card-detail">
             <p>Kawabata Sepatu Sandal Kasual Slingback Mules Kawabata Sepatu Sandal Kasual Slingback Mules</p>
             <div class="product-card-footer">
-                <div class="product-price">Rp 590.000</div>
-                <div class="product-sale">19 Terjual</div>
+                <div class="product-price">
+                    <p><span>Rp</span>{{ formattedPrice }}</p>
+                </div>
+                <div v-if="sale !== undefined" class="product-sale">
+                    <p>{{ formattedSale }} Terjual</p>
+                </div>
             </div>
         </div>
     </NuxtLink>
 </template>
 
 <script setup>
-
+// import { formatNumber } from '~/utils/number.utils';
+const props = defineProps({
+    title: {
+        type: String,
+        default: "",
+    },
+    image: {
+        type: String,
+        default: "",
+    },
+    price: {
+        type: Number,
+        default: 100000,
+    },
+    sale: {
+        type: Number,
+        default: undefined,
+    },
+    discount: {
+        type: Number,
+        default: undefined,
+    }
+})
+const formattedPrice = computed(()=> formatNumber(props.price));
+const formattedSale = computed(()=> formatNumber(props.sale));
+const formattedDiscount = computed(()=> formatNumber(props.discount));
 </script>
 
 <style scoped>
 .product-card {
     @apply bg-white;
     @apply border;
+    @apply relative;
+}
+
+.product-discount {
+    @apply absolute;
+    @apply right-0;
+    @apply bg-primary-50;
+    @apply px-1 py-0.5;
+    @apply text-primary text-xs font-normal;
 }
 
 .product-card img {
@@ -38,6 +77,18 @@
 
 .product-card-footer {
     @apply mt-8;
-    @apply flex justify-between gap-2;
+    @apply flex justify-between gap-2 items-center;
+}
+
+.product-price p {
+    @apply text-primary font-medium text-base;
+}
+
+.product-price span {
+    @apply text-xs;
+}
+
+.product-sale p {
+    @apply text-xs font-normal;
 }
 </style>

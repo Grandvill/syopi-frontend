@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-6">
+  <div class="flex flex-col gap-6 pb-6">
     <section class="banner-section">
       <UContainer>
         <featureHomepageCarousel :items="items" />
@@ -28,10 +28,16 @@
           <h2>Rekomendasi</h2>
         </div>
         <div class="product-section-content">
-          <BaseProductCard />
+          <BaseProductCard v-for="i in 36" :key="`product-${i}`" title="Kawabata Sepatu Sandal Kasual Slingback Mules…" price="100000" image="images/rekomendasi/sepatu.png" />
         </div>
       </UContainer>
     </section>
+
+    <UContainer>
+      <UButton color="white" class="font-normal px-28">
+        Login untuk Lihat Lainnya
+      </UButton>
+    </UContainer>
   </div>
 </template>
 
