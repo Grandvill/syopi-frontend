@@ -5,6 +5,13 @@
                 <IconFilter/>
                 <h2>Filter</h2>
             </div>
+            <div class="filter-item">
+                <h3>Batas Harga</h3>
+                <div class="flex gap-2 items-center">
+                    <UInput type="number" placeholder="Rp Min"/>
+                    <UInput type="number" placeholder="Rp Max"/>
+                </div>
+            </div>
         </div>
     </UContainer>
 </template>
