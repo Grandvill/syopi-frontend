@@ -1,57 +1,118 @@
 <template>
-    <UContainer id="search-section">
-        <div class="search-filter">
-            <div class="filter-title">
-                <IconFilter/>
-                <h2>Filter</h2>
-            </div>
-            <div class="filter-item">
-                <h3>Batas Harga</h3>
-                <div class="flex gap-2 items-center">
-                    <UInput type="number" placeholder="Rp Min"
-                    :ui="{
-                            base: 'bg-gray-200 text-gray-700 opacity-100 border border-gray-400',
-                            color: { white: 'bg-gray-200' }
-                        }"
-                        class="price-input"
-                    />
-                    <UInput type="number" placeholder="Rp Max"
-                    :ui="{
-                            base: 'bg-gray-200 text-gray-700 opacity-100 border border-gray-400',
-                            color: { white: 'bg-gray-200' }
-                        }"
-                        class="price-input"
-                    />
-                </div>
-            </div>
+  <UContainer id="search-section">
+    <div class="search-filter">
+      <div class="filter-title">
+        <IconFilter />
+        <h2>Filter</h2>
+      </div>
+      <div class="filter-item">
+        <h3>Batas Harga</h3>
+        <div class="price-inputs">
+          <UInput
+            type="number"
+            placeholder="Rp MIN"
+            color="white"
+            :ui="{
+              base: 'bg-white border-gray-300',
+            }"
+          />
+          <div class="price-divider" />
+          <UInput
+            type="number"
+            placeholder="Rp MAX"
+            color="white"
+            :ui="{
+              base: 'bg-white border-gray-300',
+            }"
+          />
         </div>
-    </UContainer>
+        <UButton block color="red" class="apply-button">TERAPKAN</UButton>
+      </div>
+      <hr class="divider" />
+      <div class="filter-item">
+        <h3>Berdasarkan Kategori</h3>
+        <div class="category-list">
+          <UCheckbox label="Kategori 1" color="blue" />
+          <UCheckbox label="Kategori 2" color="gray" />
+          <UCheckbox label="Kategori 3" color="gray" />
+          <UCheckbox label="Kategori 4" color="gray" />
+        </div>
+      </div>
+    </div>
+  </UContainer>
 </template>
 
-<script setup>
-
-</script>
+<script setup></script>
 
 <style scoped>
 #search-section {
-    @apply py-8 flex gap-4;
+  @apply py-8 flex gap-4;
+}
+
+.search-filter {
+  @apply flex flex-col gap-5;
+  @apply w-64 bg-gray-50 p-4 rounded;
 }
 
 .filter-title {
-    @apply flex gap-2 items-center;
+  @apply flex gap-2 items-center;
 }
 
-.filter-title h2{
-    @apply text-base font-bold text-black/80;
-    @apply uppercase;
+.filter-title h2 {
+  @apply text-base font-bold text-black/80;
+  @apply uppercase;
+}
+
+.filter-item {
+  @apply flex flex-col gap-3;
 }
 
 .filter-item h3 {
-    @apply text-black;
+  @apply text-sm text-black/80 font-semibold mb-1;
 }
 
-.price-input :deep(input[type="number"]) {
-    color: #000000 !important;
-    -webkit-text-fill-color: #000000 !important;
+.price-inputs {
+  @apply flex gap-2 items-center;
+}
+
+.price-divider {
+  @apply h-[1px] bg-gray-400 w-4 flex-shrink-0;
+}
+
+.apply-button {
+  @apply py-2.5 mt-1;
+  @apply text-white;
+}
+
+.divider {
+  @apply border-gray-300 my-1;
+}
+
+.category-list {
+  @apply flex flex-col gap-2.5;
+}
+
+/* Style untuk label checkbox - text abu-abu terang */
+.category-list :deep(label) {
+  @apply text-gray-400;
+}
+
+/* Style untuk checkbox box - border dan background putih */
+.category-list :deep(input[type='checkbox']) {
+  @apply border-gray-400 bg-white;
+}
+
+/* Ketika di-check - background hitam/gelap agar checkmark putih terlihat */
+.category-list :deep(input[type='checkbox']:checked) {
+  @apply bg-gray-800 border-gray-800;
+}
+
+/* Ensure input styling */
+:deep(.price-inputs input) {
+  @apply bg-white text-black text-sm;
+}
+
+:deep(.price-inputs input::placeholder) {
+  @apply text-gray-500;
 }
 </style>
