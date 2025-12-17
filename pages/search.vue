@@ -38,6 +38,31 @@
           <UCheckbox label="Kategori 4" color="gray" />
         </div>
       </div>
+      <hr />
+      <UButton block color="red" class="apply-button">HAPUS SEMUA</UButton>
+    </div>
+    <div class="search-results">
+      <div class="search-keyword">
+        <IconLamp />
+        <p>Hasil pencarian untuk '<span>Testing keyword</span>'</p>
+      </div>
+      <div class="search-sort">
+        <div class="search-sort-control">
+          <p>Urutkan</p>
+          <UButton class="btn-termurah">Termurah</UButton>
+          <UButton color="black" class="px-6">Termahal</UButton>
+        </div>
+        <div class="search-sort-pagination">
+          <p><span>1</span>/17</p>
+          <div>
+            <UButton icon="i-heroicons:chevron-left-20-solid" color="black" size="xs" disabled />
+            <UButton icon="i-heroicons:chevron-right-20-solid" color="gray-600" size="xs" />
+          </div>
+        </div>
+      </div>
+      <div class="search-content">
+        <BaseProductCard v-for="i in 10" :key="`product-${i}`" title="Kawabata Sepatu Sandal Kasual Slingback Mules…" price="100000" image="images/rekomendasi/sepatu.png" sale="19" />
+      </div>
     </div>
   </UContainer>
 </template>
@@ -114,5 +139,55 @@
 
 :deep(.price-inputs input::placeholder) {
   @apply text-gray-500;
+}
+
+.search-results {
+  @apply flex-1;
+  @apply text-black;
+}
+
+.search-keyword {
+  @apply flex items-center gap-2;
+  @apply text-gray-800;
+}
+
+.search-keyword span {
+  @apply text-primary;
+}
+
+.search-sort {
+  @apply flex items-center gap-2 justify-between;
+  @apply px-5 py-3;
+  @apply bg-black/5;
+  @apply mt-4;
+}
+
+.search-sort-control {
+  @apply flex items-center gap-3;
+}
+
+.btn-termurah {
+  @apply text-white px-6;
+}
+
+.search-sort-control p {
+  @apply text-sm text-gray-600 font-normal;
+}
+
+.search-sort-pagination {
+  @apply flex gap-5 items-center;
+}
+
+.search-sort-pagination p {
+  @apply text-sm font-normal text-black/80;
+}
+
+.search-sort-pagination span {
+  @apply text-primary;
+}
+
+.search-content {
+  @apply grid grid-cols-5 gap-3;
+  @apply mt-3;
 }
 </style>
