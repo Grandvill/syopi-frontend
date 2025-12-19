@@ -50,12 +50,12 @@
         <div class="search-sort-control">
           <p>Urutkan</p>
           <UButton class="btn-termurah">Termurah</UButton>
-          <UButton color="black" class="px-6">Termahal</UButton>
+          <UButton color="white" class="px-6">Termahal</UButton>
         </div>
         <div class="search-sort-pagination">
           <p><span>1</span>/17</p>
           <div>
-            <UButton icon="i-heroicons:chevron-left-20-solid" color="black" size="xs" disabled />
+            <UButton icon="i-heroicons:chevron-left-20-solid" color="white" size="xs" disabled />
             <UButton icon="i-heroicons:chevron-right-20-solid" color="gray-600" size="xs" />
           </div>
         </div>
