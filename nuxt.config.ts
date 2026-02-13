@@ -7,7 +7,7 @@ export default defineNuxtConfig({
   colorMode: {
     preference: 'light',
     fallback: 'light',
-    storageKey: 'nuxt-color-mode',
+    storageKey: 'false',
   },
   app: {
     head: {
