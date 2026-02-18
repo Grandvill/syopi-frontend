@@ -6,7 +6,30 @@
         <div class="product-image">
           <div class="bg-primary w-[450px] aspect-[1/1]"></div>
         </div>
-        <div class="product-information"></div>
+        <div class="product-information">
+          <div class="product-title">
+            <h2>{{ dataDummy.name }}</h2>
+            <div class="product-summary">
+              <div class="product-summary-item">
+                <span class="text-primary">{{ dataDummy.rating }}</span>
+                <BaseRating :model-value="dataDummy.rating" disabled />
+              </div>
+              <div class="product-summary-item">
+                <span class="text-black/80">{{ dataDummy.rating_count }}</span>
+                <span class="product-summary-item-description">Penilaian</span>
+              </div>
+              <div class="product-summary-item">
+                <span class="text-black/80">{{ dataDummy.sale_count }}</span>
+                <span class="product-summary-item-description">Terjual</span>
+              </div>
+            </div>
+            <div class="product-price">
+              <p class="text-gray-400 line-through font-normal">Rp{{ formatNumber(24900) }}</p>
+              <p class="text-primary font-normal text-3xl">Rp{{ formatNumber(125000) }}</p>
+              <UBadge size="xs">50% OFF</UBadge>
+            </div>
+          </div>
+        </div>
       </div>
     </UCard>
     <UCard>
@@ -218,7 +241,45 @@ const items = [
   @apply flex gap-8;
 }
 
+.product-information {
+  @apply flex-1;
+}
+
+.product-summary {
+  @apply mt-2;
+  @apply flex gap-4;
+  @apply divide-x;
+}
+
+.product-summary > div:not(:first-child) {
+  @apply pl-4;
+}
+
 .product-image {
   @apply w-[400px];
+}
+
+.product-title {
+  @apply ml-12;
+}
+
+.product-summary-item {
+  @apply flex gap-2 items-center;
+}
+
+.product-summary-item span {
+  @apply underline underline-offset-4;
+}
+
+.product-summary-item-description {
+  @apply no-underline;
+  @apply text-black/50 text-sm;
+}
+
+.product-price {
+  @apply flex gap-4 items-center;
+  @apply my-3;
+  @apply bg-gray-50;
+  @apply p-4;
 }
 </style>
