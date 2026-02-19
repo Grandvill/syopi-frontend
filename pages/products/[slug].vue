@@ -28,6 +28,31 @@
               <p class="text-primary font-normal text-3xl">Rp{{ formatNumber(125000) }}</p>
               <UBadge size="xs">50% OFF</UBadge>
             </div>
+            <div class="product-variant">
+              <div class="flex flex-col gap-6">
+                <div v-for="variant in dataDummy.variations" :key="variant.name" class="flex gap-2 items-center">
+                    <p class="w-28 text-black/55 text-sm">{{ variant.name }}</p>
+                    <div class="flex flex-wrap gap-2">
+                      <UButton
+                      v-for="values in variant.values"
+                      :key="`${variant.name}-${values}`" 
+                      color="white" 
+                      :ui="{
+                        base: 'min-w-20 justify-center',
+                        padding: {
+                          sm: 'px-2 py-2',
+                        }
+                      }"
+                      >
+                    {{ values }}</UButton>
+                    </div>
+                </div>
+              </div>
+            </div>
+            <div class="flex gap-2 items-center mt-6">
+              <p class="w-28 text-black/55 text-sm">Kuantitas</p>
+              <BaseInputQuantity v-model="quantity" />
+            </div>
           </div>
         </div>
       </div>
@@ -39,6 +64,8 @@
 </template>
 
 <script setup>
+const quantity = ref(1);
+
 const colorMode = useColorMode();
 console.log(colorMode.value);
 
