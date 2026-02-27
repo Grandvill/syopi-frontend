@@ -4,7 +4,7 @@
     <UCard>
       <div class="product-briefing">
         <div class="product-image">
-          <div class="bg-primary w-[450px] aspect-[1/1]"></div>
+            <FeatureProductDetailCarousel :items="items"/>
         </div>
         <div class="product-information">
           <div class="product-title">
@@ -57,12 +57,22 @@
               <IconCartPlus />
               Masukkan Keranjang
             </UButton>
+            <hr class="my-5" />
+            <div class="flex gap-5">
+              <div class="flex gap-2">
+                  <img src="~/assets/images/garansi.png" />
+                  <p class="text-black/80 text-sm">Garansi Syopi</p>
+                </div>
+                <p class="text-black/55 text-sm">Dapatkan barang pesananmu atau uang kembali.</p>
+            </div>
           </div>
         </div>
       </div>
     </UCard>
     <UCard>
-      <div class="product-seller"></div>
+      <div class="product-seller">
+        
+      </div>
     </UCard>
   </UContainer>
 </template>
@@ -246,25 +256,15 @@ const uiBreadcrumb = {
 };
 
 const items = [
-  'https://picsum.photos/1920/1080?random=1',
-  'https://picsum.photos/1920/1080?random=2',
-  'https://picsum.photos/1920/1080?random=3',
-  'https://picsum.photos/1920/1080?random=4',
-  'https://picsum.photos/1920/1080?random=5',
-  'https://picsum.photos/1920/1080?random=6',
-  'https://picsum.photos/1920/1080?random=1',
-  'https://picsum.photos/1920/1080?random=2',
-  'https://picsum.photos/1920/1080?random=3',
-  'https://picsum.photos/1920/1080?random=4',
-  'https://picsum.photos/1920/1080?random=5',
-  'https://picsum.photos/1920/1080?random=6',
-  'https://picsum.photos/1920/1080?random=1',
-  'https://picsum.photos/1920/1080?random=2',
-  'https://picsum.photos/1920/1080?random=3',
-  'https://picsum.photos/1920/1080?random=4',
-  'https://picsum.photos/1920/1080?random=5',
-  'https://picsum.photos/1920/1080?random=6',
-];
+  { type: 'img', src: 'https://picsum.photos/1920/1080?random=1' },
+  { type: 'img', src: 'https://picsum.photos/1920/1080?random=2' },
+  { type: 'img', src: 'https://picsum.photos/1920/1080?random=3' },
+  { type: 'img', src: 'https://picsum.photos/1920/1080?random=4' },
+  { type: 'img', src: 'https://picsum.photos/1920/1080?random=5' },
+  { type: 'img', src: 'https://picsum.photos/1920/1080?random=6' },
+]
+
+
 </script>
 
 <style scoped>
