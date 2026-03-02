@@ -71,7 +71,7 @@
     </UCard>
     <UCard>
       <div class="product-seller">
-        <div class="flex gap-6 items-center flex-1">
+        <div class="flex gap-6 items-center w-96">
           <UAvatar :alt="dataDummy.seller.store_name" size="3xl" />
           <div>
             <h3>{{ dataDummy.seller.store_name }}</h3>
