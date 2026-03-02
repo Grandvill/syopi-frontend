@@ -98,6 +98,45 @@
         </div>
       </div>
     </UCard>
+    <UCard>
+      <div class="product-detail">
+        <div class="product-detail-title">
+          <h3>Spesifikasi Produk</h3>
+        </div>
+        <div class="flex flex-col gap-4">
+          <div class="product-detail-item">
+            <p>Kategori</p>
+            <div>
+              <UBreadcrumb :links="[
+                {
+                  label: dataDummy.category.parent.name,
+                  to: `/`,
+                },
+                {
+                  label: dataDummy.category.name,
+                  to: `/categories/${dataDummy.category.parent.slug}/${dataDummy.category.slug}`,
+                },
+              ]" :ui="{
+                  ...uiBreadcrumb,
+                  active: 'text-[#0055AA]',
+              }" />
+            </div>
+          </div>
+          <div class="product-detail-item">
+            <p>Stok</p>
+            <div class="text-sm font-normal">{{ dataDummy.stock }}</div>
+          </div>
+          <div class="product-detail-item">
+            <p>Dikirim dari</p>
+            <div class="text-sm font-normal">{{ dataDummy.seller.send_from.city.name }}</div>
+          </div>
+        </div>
+        <div class="product-detail-title">
+          <h3>Deskripsi Produk</h3>
+        </div>
+        <div class="text-sm text-black/80 whitespace-pre-line" v-text="dataDummy.description"/>
+      </div>
+    </UCard>
   </UContainer>
 </template>
 
@@ -340,5 +379,26 @@ const items = [
 
 .product-seller {
   @apply flex gap-6 items-stretch;
+}
+
+.product-detail-title {
+  @apply bg-gray-50;
+  @apply p-3;
+}
+
+.product-detail-title h3 {
+  @apply text-lg font-normal text-black/85;
+}
+
+.product-detail {
+  @apply flex flex-col gap-6;
+}
+
+.product-detail-item {
+  @apply flex gap-2;
+}
+
+.product-detail-item > p {
+  @apply text-black/40 text-sm w-40;
 }
 </style>
