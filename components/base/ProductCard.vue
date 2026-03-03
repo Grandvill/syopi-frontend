@@ -3,7 +3,9 @@
     <div v-if="discount" class="product-discount">-{{ formattedDiscount }}%</div>
     <img :src="image" />
     <div class="product-card-detail">
-      <p>Kawabata Sepatu Sandal Kasual Slingback Mules Kawabata Sepatu Sandal Kasual Slingback Mules</p>
+      <p>
+        {{ title }}
+      </p>
       <div class="product-card-footer">
         <div class="product-price">
           <p><span>Rp</span>{{ formattedPrice }}</p>

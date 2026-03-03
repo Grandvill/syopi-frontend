@@ -195,6 +195,27 @@
         <BasePagination v-model="page" :total="reviews.length" />
       </div>
     </UCard>
+    <div class="flex flex-col gap-4 mt-2">
+      <div class="flex justify-between gap-2 items-center">
+        <h4 class="uppercase text-black/55 font-medium">Produk lain dari toko ini</h4>
+        <UButton variant="link" class="font-thin" :padded="false" :to="`/shop/${dataDummy.seller.username}`"
+        >
+        Lihat Semua <UIcon name="i-heroicons:chevron-right" />
+      </UButton>
+      </div>
+      <div class="grid grid-cols-6 gap-3">
+        <BaseProductCard 
+        v-for="product in dataDummy.other_product" 
+        :key="`product-${product.uuid}`" 
+        :title="product.name" 
+        :price="product.price" 
+        :image="product.image_url" 
+        :slug="product.slug"
+        :sale="product.sale_count"
+        :discount="product.price_discount_percentage"
+        />
+      </div>
+    </div>
   </UContainer>
 </template>
 
