@@ -64,38 +64,7 @@
         <BaseProductCard v-for="i in 10" :key="`product-${i}`" title="Kawabata Sepatu Sandal Kasual Slingback Mules…" price="100000" image="images/rekomendasi/sepatu.png" sale="19" />
       </div>
       <div class="flex justify-center mt-8">
-        <UPagination
-          v-model="page"
-          :page-count="5"
-          :total="items.length"
-          :inactive-button="{
-            variant: 'link',
-            class: 'text-black/40 hover:text-primary px-3 py-1',
-          }"
-          :active-button="{
-            class: 'px-3 py-1',
-          }"
-          :prev-button="{
-            variant: 'link',
-            class: 'text-black/40 hover:text-primary px-3 py-1',
-          }"
-          :next-button="{
-            variant: 'link',
-            class: 'text-black/40 hover:text-primary px-3 py-1',
-          }"
-          :ui="{
-            wrapper: 'space-x-4',
-            base: 'text-xl font-light',
-            default: {
-              prevButton: {
-                icon: 'i-heroicons:chevron-left',
-              },
-              nextButton: {
-                icon: 'i-heroicons:chevron-right',
-              },
-            },
-          }"
-        />
+        <BasePagination v-model="page" :total="items.length" />
       </div>
     </div>
   </UContainer>
