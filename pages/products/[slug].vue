@@ -53,7 +53,7 @@
               <p class="w-28 text-black/55 text-sm">Kuantitas</p>
               <BaseInputQuantity v-model="quantity" />
             </div>
-            <UButton class="mt-6" variant="soft">
+            <UButton class="mt-6" variant="soft" to="/Cart">
               <IconCartPlus />
               Masukkan Keranjang
             </UButton>
