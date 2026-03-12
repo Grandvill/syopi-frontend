@@ -2,7 +2,9 @@
     <section class="bg-white">
         <UContainer class="py-14">
             <UCard class="max-w-[500px] mx-auto auth-shadow">
-               <FeatureForgotPasswordEmail />
+               <!-- <FeatureForgotPasswordEmail /> -->
+               <FeatureForgotPasswordOtp />
+
             </UCard>
         </UContainer>
     </section>
