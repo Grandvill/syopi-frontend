@@ -3,8 +3,8 @@
         <UContainer class="py-14">
             <UCard class="max-w-[500px] mx-auto auth-shadow">
                <!-- <FeatureForgotPasswordEmail /> -->
-               <FeatureForgotPasswordOtp />
-
+               <!-- <FeatureForgotPasswordOtp /> -->
+                <FeatureForgotPassword />
             </UCard>
         </UContainer>
     </section>
