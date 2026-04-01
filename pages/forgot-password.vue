@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-import { FeatureForgotPasswordEmail, FeatureForgotPasswordOtp, FeatureForgotPassword } from "#components";
+import { FeatureForgotPasswordEmail, FormOtp, FormPassword } from "#components";
 definePageMeta({
   layout: "auth",
   header: {
@@ -35,11 +35,11 @@ const forgotPasswordStep = [
   },
   {
     key: 'otp',
-    component: FeatureForgotPasswordOtp,
+    component: FormOtp,
   },
   {
     key: 'password',
-    component: FeatureForgotPassword,
+    component: FormPassword,
 
   }
 ]

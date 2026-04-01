@@ -24,7 +24,7 @@
                         <div>
                             <!-- block button biar full width, max-w-44 biar ga terlalu lebar -->
                             <UButton block>Login</UButton>
-                            <UButton variant="link" color="blue" :padded="false" class="mt-2">Lupa Password</UButton>
+                            <UButton variant="link" to="/forgot-password" color="blue" :padded="false" class="mt-2">Lupa Password</UButton>
                         </div>
                     </form>
                     <UDivider label="ATAU" class="my-4" 
