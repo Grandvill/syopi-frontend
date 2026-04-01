@@ -1,6 +1,6 @@
 <template>
     <div class="flex gap-7 items-center">
-        <UButton icon="i-heroicons:arrow-left" variant="link" />
+        <UButton icon="i-heroicons:arrow-left" variant="link" @click="emit('back')" />
         <h3 class="text-xl font-normal">Atur Password Kamu</h3>
     </div>
     <div class="px-16 pb-16 pt-9">
@@ -22,12 +22,13 @@
                 {{ validation.message }} <UIcon :name="isContain[validation.key] ? 'i-heroicons:check-circle' : 'i-heroicons:x-circle'" class="w-5 h-5 -mb-1.5" />
                 </li>
             </ul>
-            <UButton block class="uppercase">Berikutnya</UButton>
+            <UButton block class="uppercase" @click="emit('next')">Berikutnya</UButton>
         </form>
     </div>
 </template>
 
 <script setup>
+const emit = defineEmits(['next', 'back']);
 const password = ref('');
 const validationMessage = [
     {message: 'Min. satu karakter huruf kecil', key: 'lowercase'},

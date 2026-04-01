@@ -4,13 +4,18 @@
             <UCard class="max-w-[500px] mx-auto auth-shadow">
                <!-- <FeatureForgotPasswordEmail /> -->
                <!-- <FeatureForgotPasswordOtp /> -->
-                <FeatureForgotPassword />
+                <!-- <FeatureForgotPassword /> -->
+                <component 
+                :is="forgotPasswordStep[stepActive].component" 
+                @next="handleNext(forgotPasswordStep[stepActive].key)" 
+                @back="handleBack(forgotPasswordStep[stepActive].key)" />
             </UCard>
         </UContainer>
     </section>
 </template>
 
-<script>
+<script setup>
+import { FeatureForgotPasswordEmail, FeatureForgotPasswordOtp, FeatureForgotPassword } from "#components";
 definePageMeta({
   layout: "auth",
   header: {
@@ -18,6 +23,43 @@ definePageMeta({
     title: "Reset Password",
   },
 });
+
+const router = useRouter();
+
+const stepActive = ref(0);
+
+const forgotPasswordStep = [
+  {
+    key: 'email',
+    component: FeatureForgotPasswordEmail,
+  },
+  {
+    key: 'otp',
+    component: FeatureForgotPasswordOtp,
+  },
+  {
+    key: 'password',
+    component: FeatureForgotPassword,
+
+  }
+]
+
+function handleNext(stepKey) {
+  if (stepKey === 'password') {
+    alert('Success reset password');
+    return router.push('/login');
+  }
+
+  stepActive.value++
+}
+
+function handleBack() {
+  if (stepActive.value === 0) {
+    return router.push('/login')
+  }
+
+  stepActive.value--
+}
 </script>
 
 <style scoped>
