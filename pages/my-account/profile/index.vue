@@ -136,7 +136,7 @@ import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import { format } from "date-fns";
 
-const session = useSession();
+// const session = useSession();
 const { profile } = storeToRefs(session);
 
 const temporaryProfile = ref({

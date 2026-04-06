@@ -1,7 +1,7 @@
 <script setup>
 import { DatePicker as VCalendarDatePicker } from "v-calendar";
 
-import "v-calendar/dist/style.css";
+// import "v-calendar/dist/style.css";
 import { format } from "date-fns";
 
 defineProps({
