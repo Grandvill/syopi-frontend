@@ -1,15 +1,3 @@
 <template>
-    <div>
-        Profile
-    </div>
+  <NuxtPage/>
 </template>
-
-<script>
-    export default {
-        
-    }
-</script>
-
-<style lang="scss" scoped>
-
-</style>
