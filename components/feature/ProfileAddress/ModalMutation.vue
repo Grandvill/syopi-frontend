@@ -14,7 +14,7 @@
                     <UInput placeholder="Nomor Telepon" size="lg" />
                 </UFormGroup>
                 <UFormGroup class="col-span-2"> <!-- cols-2 jadi lebih panjang fieldnya -->
-                    <UInput placeholder="Provinsi, Kota" size="lg" />
+                    <FeatureProfileAddressInputSelectCity />
                 </UFormGroup>
                 <UFormGroup>
                     <UInput placeholder="Kecamatan" size="lg" />
