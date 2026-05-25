@@ -1,19 +1,46 @@
 <template>
     <div class="flex gap-3">
-        <img src="https://picsum.photos/200/300" class="aspecr-[1/1] w-20 h-20 object-cover" />
+        <img src="https://picsum.photos/200/300" class="aspect-[1/1] object-cover" :class="sizeClass[size]?.image" />
         <div class="flex-1">
-            <p class="line-clamp-2 text-base">Product Name</p>
-            <p class="text-sm text-black/55">Variasi: white, 39</p>
-            <p class="text-sm">x1</p>
+            <p class="line-clamp-2" :class="sizeClass[size]?.title">Product Name</p>
+            <template v-if="!hideDescription">
+                <p class="text-sm text-black/55">Variasi: white, 39</p>
+                <p class="text-sm">x1</p>
+            </template>
         </div>
-        <div class="flex items-center">
+        <div v-if="!hidePrice" class="flex items-center">
             Rp{{ formatNumber(1000) }}
         </div>
     </div>
 </template>
 
 <script setup>
+defineProps({
+    hidePrice: {
+        type: Boolean,
+        default: false,
+    },
+    hideDescription: {
+        type: Boolean,
+        default: false,
+    },
+    size: {
+        type: String,
+        default: 'lg',
+        validator: (propsValue) => ['sm', "lg"].includes(propsValue),
+    }
+});
 
+const sizeClass = {
+    sm: {
+        image: "h-14 w-14",
+        title: "text-sm",
+    },
+    lg: {
+        image: "h-20 w-20",
+        title: "text-base",
+    },
+};
 </script>
 
 <style lang="scss" scoped>
