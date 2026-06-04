@@ -11,6 +11,7 @@
 </template>
 
 <script setup>
+const route = useRoute();
 const sidebarItems = computed(() => [
   {
     label: 'Pesanan',
@@ -20,6 +21,7 @@ const sidebarItems = computed(() => [
   {
     label: 'Produk',
     icon: 'i-heroicons:inbox-stack',
+    defaultOpen: route.path.includes('/seller/product'),
     children: [
       {
         label: 'Produk Saya',
@@ -62,6 +64,7 @@ const sidebarItems = computed(() => [
 .main-content {
   @apply flex-1;
   @apply bg-black/10;
+  @apply pt-[calc(56px+16px)] pb-4 pl-[calc(240px+16px)] pr-8;
 }
 
 .seller-sidebar {
