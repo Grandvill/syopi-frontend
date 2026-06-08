@@ -2,7 +2,7 @@
     <div class="space-y-6">
         <div class="flex justify-between items-center gap-2">
             <h3 class="font-medium text-xl ">Produk Saya</h3>
-            <UButton icon="i-heroicons:plus" label="Tambah Produk Baru" />
+            <UButton icon="i-heroicons:plus" label="Tambah Produk Baru" to="product/add" />
         </div>
         <UCard>
             <div class="space-y-6">
@@ -28,8 +28,8 @@
                 </template>
                 <template #action-data="{row}">
                     <div class="flex flex-col gap-1">
-                        <UButton variant="link" :padded="false" color="blue" label="Hapus" />
-                        <UButton variant="link" :padded="false" color="blue" label="Ubah" />
+                      <UButton variant="link" :padded="false" color="blue" label="Ubah" @click="handleEdit(row)" />
+                      <UButton variant="link" :padded="false" color="blue" label="Hapus" />
                     </div>
                 </template>
                 </BaseDataTable>
@@ -39,6 +39,8 @@
 </template>
 
 <script setup>
+const router = useRouter();
+
 const columns = [
   {
     key: "name",
@@ -145,6 +147,13 @@ const products = [
     ],
   },
 ];
+
+function handleEdit(row) {
+  router.push({
+    path: `/seller/product/edit/${row.uuid}`,
+    state: row,
+  })
+}
 </script>
 
 <style scoped>
