@@ -1,8 +1,8 @@
 <script setup>
-import { DatePicker as VCalendarDatePicker } from "v-calendar";
+import { DatePicker as VCalendarDatePicker } from 'v-calendar';
 
 // import "v-calendar/dist/style.css";
-import { format } from "date-fns";
+import { format } from 'date-fns';
 
 defineProps({
   range: {
@@ -17,37 +17,26 @@ const date = defineModel({
 });
 
 const showingDate = computed(() => {
-  if (date.value) return format(date.value, "d/MM/yy");
-  return "";
+  if (date.value) return format(date.value, 'd/MM/yy');
+  return '';
 });
 
 const attrs = {
   transparent: true,
   borderless: true,
-  color: "primary",
-  "is-dark": { selector: "html", darkClass: "dark" },
-  "first-day-of-week": 2,
+  color: 'primary',
+  'is-dark': { selector: 'html', darkClass: 'dark' },
+  'first-day-of-week': 2,
 };
 </script>
 
 <template>
   <UPopover :popper="{ placement: 'bottom-start' }">
-    <UInput :model-value="showingDate" readonly size="lg" class="w-full"/>
-    
+    <UInput :model-value="showingDate" readonly size="lg" class="w-full" />
+
     <template #panel="{ close }">
-      <VCalendarDatePicker
-        v-if="range"
-        v-model.range="date"
-        :columns="2"
-        v-bind="{ ...attrs, ...$attrs }"
-        @update:model-value="close"
-      />
-      <VCalendarDatePicker
-        v-else
-        v-model="date"
-        v-bind="{ ...attrs, ...$attrs }"
-        @update:model-value="close"
-      />
+      <VCalendarDatePicker v-if="range" v-model.range="date" :columns="2" v-bind="{ ...attrs, ...$attrs }" @update:model-value="close" />
+      <VCalendarDatePicker v-else v-model="date" v-bind="{ ...attrs, ...$attrs }" @update:model-value="close" />
     </template>
   </UPopover>
 </template>
