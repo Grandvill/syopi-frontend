@@ -51,7 +51,7 @@
         </template>
         <template #action-data="{ row }">
           <div class="flex flex-col gap-2">
-            <UButton label="Ubah" variant="link" color="blue" :padded="false" />
+            <UButton label="Ubah" variant="link" color="blue" :padded="false" @click="handleEdit(row)" />
             <UButton label="Hapus" variant="link" color="red" :padded="false" />
           </div>
         </template>
@@ -64,6 +64,8 @@
 import VoucherCoin from '~/assets/images/voucher-cashback-coin.png';
 import VoucherPercentage from '~/assets/images/voucher-percentage.png';
 import VoucherFixed from '~/assets/images/voucher-fixed.png';
+
+const router = useRouter();
 
 const image = {
   coin: VoucherCoin,
@@ -170,6 +172,13 @@ const items = [
     end_date: '2024-10-12 06:03:51',
   },
 ];
+
+function handleEdit(row) {
+  router.push({
+    path: `/seller/voucher/edit/${row.uuid}`,
+    state: row,
+  })
+}
 </script>
 
 <style scoped></style>

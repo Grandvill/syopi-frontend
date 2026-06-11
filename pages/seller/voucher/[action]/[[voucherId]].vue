@@ -81,8 +81,8 @@
         </SellerFormGroup>
         <SellerFormGroup label="Tanggal Voucher Bisa Digunakan">
           <div class="grid grid-cols-2 gap-4">
-            <!-- <BaseDatePicker v-model="form.start_date" />
-            <BaseDatePicker v-model="form.end_date" /> -->
+            <BaseDatePicker v-model="form.start_date" />
+            <BaseDatePicker v-model="form.end_date" />
           </div>
         </SellerFormGroup>
       </div>
@@ -101,6 +101,8 @@ definePageMeta({
 });
 
 const route = useRoute();
+const router = useRouter();
+
 route.meta.breadcrumb =
   route.params.action === 'add'
     ? [
@@ -133,6 +135,22 @@ const form = ref({
   start_date: null,
   end_date: null,
 });
+
+onMounted(() => {
+  if(route.params.action === 'edit') {
+    const defaultData = router.options.history.state;
+    if(!defaultData.uuid) {
+      router.replace("/seller/voucher");
+      return;
+    }
+    form.value = {
+      ...form.value,
+      ...defaultData,
+      start_date: defaultData.start_date ? new Date(defaultData.start_date) : null,
+      end_date: defaultData.end_date ? new Date(defaultData.end_date) : null,
+    }
+  }
+})
 </script>
 
 <style scoped></style>
