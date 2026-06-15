@@ -35,7 +35,7 @@ const breadcrumb = computed(() => {
 // ];
 
 const ui = {
-  active: 'text-slate-800 dark:text-slate-800 ',
+  active: 'text-slate-800',
   inactive: 'text-black/50',
   base: 'font-normal text-lg',
   li: 'text-black/50',
