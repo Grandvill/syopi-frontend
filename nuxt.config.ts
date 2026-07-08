@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
   // css: ['@/assets/css/main.css'],
-  modules: ['@nuxt/ui', '@vueuse/nuxt', '@nuxt/image'],
+  modules: ['@nuxt/ui', '@vueuse/nuxt', '@nuxt/image', "@pinia/nuxt"],
   colorMode: {
     preference: 'light',
     fallback: 'light',
@@ -28,4 +28,8 @@ export default defineNuxtConfig({
       ],
     },
   },
+
+  routeRules: {
+    '/server/**': {proxy: `${import.meta.env.NUXT_BASE_URL}/**`},
+  }
 });
