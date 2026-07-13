@@ -84,7 +84,7 @@ const rules = {
     password: {required, minLength: minLength(8)},
 }
 
-const $externalResults = reff({})
+const $externalResults = ref({})
 
 const v$ = useVuelidate(rules, form, {
     $autoDirty: true, //bikin form jadi state

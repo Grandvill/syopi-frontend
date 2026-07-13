@@ -12,6 +12,24 @@ export const useSession = defineStore('session', () => {
     });
 
     const token = ref("");
+    const tokenCookie = useCookie('access_token');
 
-    return {profile, token};
+    function logout() {
+        token.value = '';
+        profile.value = {
+            "name": "",
+            "email": "",
+            "photo_url": "",
+            "username": "",
+            "phone": "",
+            "store_name": "",
+            "gender": "",
+            "birth_date": "",
+            "balance": 0,
+        }
+        tokenCookie.value = undefined;
+        navigateTo('/');
+    }
+
+    return {profile, token, logout};
 })
