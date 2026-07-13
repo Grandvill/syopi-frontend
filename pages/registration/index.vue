@@ -28,10 +28,7 @@
               label: 'text-gray-300 font-normal',
             }"
           />
-          <UButton block color="white">
-            <img src="~/assets/images/google.png" class="w-6 h-6" />
-            Google
-          </UButton>
+          <BaseButtonGoogleSignIn />
           <p class="text-sm font-normal text-black/25 text-center mt-8">
             Punya akun?
             <NuxtLink to="/login" class="text-primary">Log in</NuxtLink>

@@ -35,10 +35,7 @@
                     :ui="{
                         label: 'text-gray-300 font-normal',
                     }" />
-                    <UButton block color="white">
-                        <img src="~/assets/images/google.png" class="w-6 h-6" />
-                        Google
-                    </UButton>
+                    <BaseButtonGoogleSignIn />
                     <p class="text-sm font-normal text-black/55 mt-3 text-center">Baru di Syopi? <NuxtLink to="/registration" class="text-primary">Daftar Sekarang</NuxtLink></p>
                 </UCard>
             </div>
@@ -55,6 +52,7 @@ definePageMeta({
     header: {
         title: 'Login',
     },
+    middleware: ["must-not-auth"],
 });
 
 const session = useSession();
