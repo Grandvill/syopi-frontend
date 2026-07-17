@@ -48,5 +48,5 @@ export const useSession = defineStore('session', () => {
         navigateTo('/');
     }
 
-    return {profile, token, logout, registrationForm, resetRegistrationForm};
+    return {profile, token, logout, registrationForm, resetRegistrationForm, tokenCookie};
 })
