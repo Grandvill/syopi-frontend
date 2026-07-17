@@ -16,8 +16,8 @@
         >
           <h2>Daftar</h2>
           <form class="mt-7 space-y-7" @submit.prevent="handleSubmit">
-            <UFormGroup>
-              <UInput placeholder="Email" size="lg" />
+            <UFormGroup :error="v$.email.$errors?.[0]?.$message">
+              <UInput v-model="registrationForm.email" placeholder="Email" size="lg" />
             </UFormGroup>
             <UButton type="submit" block class="uppercase">Berikutnya</UButton>
           </form>
@@ -40,17 +40,58 @@
 </template>
 
 <script setup>
+import useVuelidate from "@vuelidate/core";
+import {email, required} from "@vuelidate/validators";
+
 definePageMeta({
   layout: "auth",
   header: {
     title: "Daftar",
   },
+  middleware: ["must-not-auth"],
 });
 
 const router = useRouter()
+const {registrationForm} = storeToRefs(useSession());
 
-function handleSubmit () {
-  router.push('/registration/form')
+const rules = {
+  email: [required, email],
+}
+
+const $externalResults = ref({});
+
+const v$ = useVuelidate(rules, registrationForm, {
+  $autodirty: true,
+  $externalResults,
+});
+
+const {status, error, execute} = useSubmit("/server/api/register");
+
+async function handleSubmit() {
+  $externalResults.value = {};
+
+  const isValid = await v$.value.$validate();
+  if(!isValid) return;
+
+  await execute({
+    email: registrationForm.value.email,
+  })
+
+  if(error.value) {
+    if (error.value.statusCode === 429) {
+      $externalResults.value = {
+        email: ["Terlalu banyak percobaan. Silakan coba lagi beberapa saat lagi."]
+      };
+      return;
+    }
+
+    $externalResults.value = error.value.data?.meta?.validation || {};
+    return;
+  }
+
+  if(status.value === "success") {
+    router.push('/registration/form');
+  }
 }
 </script>
 

@@ -37,5 +37,6 @@ export default defineNuxtConfig({
 
   routeRules: {
     '/server/**': {proxy: `${import.meta.env.NUXT_BASE_URL}/**`},
+    '/registration/**': {ssr: false}, //menggunakan client side karena ada beberapa library yang tidak support ssr seperti startCountdown
   }
 });
