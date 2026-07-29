@@ -5,19 +5,14 @@
       width: 'w-full',
       rounded: 'rounded-sm',
     }"
-    @update:open="handlecheckselected"
+    @update:open="handleCheckSelected"
   >
-    <UInput
-        :model-value="showSelected"
-        :placeholder="placeholder"
-        class="w-full"
-        size="lg"
-    />
+    <UInput :model-value="showSelected" :placeholder="placeholder" class="w-full" size="lg" />
 
-    <template #panel="{close}">
+    <template #panel="{ close }">
       <div>
         <UTabs
-        v-model="tabActive"
+          v-model="tabActive"
           :items="items"
           :ui="{
             list: {
@@ -25,8 +20,7 @@
               padding: 'p-0',
               rounded: 'rounded-none',
               marker: {
-                wrapper:
-                  '!top-[0px] left-0 !h-[100%] border-b-2 border-primary',
+                wrapper: '!top-[0px] left-0 !h-[100%] border-b-2 border-primary',
                 rounded: 'rounded-none',
                 shadow: 'shadow-none',
               },
@@ -39,22 +33,30 @@
           }"
         >
           <template #item="{ item }">
-            <template v-if="options[item.key].length">
-              <UButton
-                v-for="child in options[item.key]"
-                :key="child.uuid"
-                variant="ghost"
-                block
-                :color="
-                  form[item.key]?.uuid === child.uuid ? 'primary' : 'gray'
-                "
-                class="justify-start"
-                :label="child.name"
-                @click="handleSelect(child, item.key, close)"
-            />
+            <div class="max-h-96 overflow-y-auto">
+              <div v-if="statusProvince === 'pending' || statusCities === 'pending'" class="space-y-3 p-2">
+                <USkeleton class="h-4" />
+                <USkeleton class="h-4" />
+                <USkeleton class="h-4" />
+                <USkeleton class="h-4" />
+              </div>
+              <template v-else>
+                <template v-if="options[item.key].length">
+                  <UButton
+                    v-for="child in options[item.key]"
+                    :key="child.uuid"
+                    variant="ghost"
+                    block
+                    :color="form[item.key]?.uuid === child.uuid ? 'primary' : 'gray'"
+                    class="justify-start"
+                    :label="child.name"
+                    @click="handleSelect(child, item.key, close)"
+                  />
+                </template>
+                <p v-else class="text-center my-3 text-black/40">Tidak ada data yang ditemukan</p>
+              </template>
+            </div>
           </template>
-          <p v-else class="text-center my-3 text-black/40">Tidak ada data yang ditemukan</p>
-        </template>  
         </UTabs>
       </div>
     </template>
@@ -63,97 +65,123 @@
 
 <script setup>
 defineProps({
-    placeholder: {
-        type: String,
-        default: 'Provinsi, Kota',
-    },
+  placeholder: {
+    type: String,
+    default: 'Provinsi, Kota',
+  },
 });
+const nuxtApp = useNuxtApp();
+
+const modelCity = defineModel('city', {
+  type: Object,
+  default: () => ({
+    uuid: null,
+    name: null,
+  }),
+});
+
+const modelProvince = defineModel('province', {
+  type: Object,
+  default: () => ({
+    uuid: null,
+    name: null,
+  }),
+});
+
 const tabActive = ref(0);
 const form = reactive({
-    province: null,
-    city: null,
+  province: null,
+  city: null,
 });
 
-const showSelected = computed(
-  () => `${form.province?.name || ""}${form.city ? `, ${form.city.name}` : ""}`
+watch(
+  modelCity,
+  (newCity) => {
+    form.city = {
+      uuid: newCity?.uuid,
+      name: newCity?.name,
+    };
+  },
+  { immediate: true },
 );
 
+watch(
+  modelProvince,
+  (newProvince) => {
+    form.province = {
+      uuid: newProvince?.uuid,
+      name: newProvince?.name,
+    };
+  },
+  { immediate: true },
+);
+
+const showSelected = computed(() => `${form.province?.name || ''}${form.city?.name ? `, ${form.city.name}` : ''}`);
+
 const items = computed(() => [
-    {
-        label: 'Provinsi',
-        key: 'province',
-    },
-    {
-        label: 'Kota',
-        key: 'city',
-        disabled: !form.province?.uuid,
-    },
+  {
+    label: 'Provinsi',
+    key: 'province',
+  },
+  {
+    label: 'Kota',
+    key: 'city',
+    disabled: !form.province?.uuid,
+  },
 ]);
 
 const options = computed(() => ({
-    city: cities.value,
-    province: provinces.value,
+  city: cities.value,
+  province: provinces.value,
 }));
 
-const provinces = computed(() => [
-    {
-        uuid: 'ee8d57c-9b1e-4a7c-8d0e-9f2b1c3a1a2b',
-        name: 'Bali',
-    },
-    {
-        uuid: 'a1b2c3d-4e5f-6789-0abc-def123456789',
-        name: 'Bangka Belitung',
-    },
-    {
-        uuid: '12345678-90ab-cdef-1234-567890abcdef',
-        name: 'Banten',
-    },
-    {
-        uuid: 'abcdef12-3456-7890-abcd-ef1234567890',
-        name: 'Bengkulu',
-    },
-    {
-        uuid: '7890abcd-1234-5678-90ab-cdef12345678',
-        name: 'Jawa Barat',
-    },
-]);
+const { data: responseProvince, status: statusProvince } = useApi('/server/api/province', {
+  key: 'province-list',
+  getCachedData() {
+    return nuxtApp.payload.data?.['province-list'] || nuxtApp.static.data?.['province-list'];
+  },
+});
 
-const cities = computed(() => [
-    {
-        uuid: 'f444e5c-9b1e-4a7c-8d0e-9f2b1c3a1a2b',
-        province: {
-            uuid: 'ee8d57c-9b1e-4a7c-8d0e-9f2b1c3a1a2b',
-            name: 'Bali',
-        },
-        external_id: '104',
-        name: 'Kabupaten Cianjur',
-    }
-].filter((item) => item.province.uuid === form.province?.uuid));
+const { data: responseCities, status: statusCities } = useApi('/server/api/city', {
+  immediate: false,
+  params: computed(() => ({
+    province_uuid: form.province?.uuid,
+  })),
+});
+
+const provinces = computed(() => responseProvince.value?.data || []);
+
+const cities = computed(() => responseCities.value?.data || []);
 
 async function handleSelect(value, type, close) {
-    form[type] = value;
-    
-    await nextTick();
-    if(type === 'province') {
-        form.city = null;
-        tabActive.value = 1;
-    } else {
-        tabActive.value = 0;
-        close();
-    }
+  form[type] = value;
+
+  await nextTick();
+  if (type === 'province') {
+    form.city = null;
+    tabActive.value = 1;
+  } else {
+    modelCity.value = {
+      uuid: form.city.uuid,
+      name: form.city.name,
+    };
+    modelProvince.value = {
+      uuid: form.province.uuid,
+      name: form.province.name,
+    };
+    tabActive.value = 0;
+    close();
+  }
 }
 
-function handlecheckselected(isOpen) {
-    if(!isOpen) {
-        tabActive.value = 0;
-        if(!form.city) {
-            form.province = null;
-        }
+function handleCheckSelected(isOpen) {
+  if (!isOpen) {
+    tabActive.value = 0;
+    if (!form.city) {
+      form.province = null;
     }
+  }
 }
-
 </script>
-
-
 
 <style lang="scss" scoped></style>
