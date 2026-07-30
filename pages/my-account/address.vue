@@ -30,7 +30,9 @@
 <script setup>
 const openEditor = ref(false);
 
-const {data: addressList, status} = useApi('/server/api/address')
+const {data: addressList, status} = useApi('/server/api/address', {
+  key: 'address-list'
+})
 // const addressList = [
 //   {
 //     uuid: "8c438746-79c5-11ef-b707-97a05ceb87e2",
