@@ -23,12 +23,13 @@
             </template>
         </div>
 
-        <FeatureProfileAddressModalMutation v-model:open="openEditor" />
+        <FeatureProfileAddressModalMutation ref="modalMutationElement" v-model:open="openEditor" />
     </div>
 </template>
 
 <script setup>
 const openEditor = ref(false);
+const modalMutationElement = ref();
 
 const {data: addressList, status} = useApi('/server/api/address', {
   key: 'address-list'
@@ -76,7 +77,28 @@ const {data: addressList, status} = useApi('/server/api/address', {
 //   },
 // ];
 
-const handleChange = () => {
+const handleChange = (address) => {
+  modalMutationElement.value.setDefaultValue({
+    uuid: address.uuid,
+    is_default: address.is_default ? true : false,
+    receiver_name: address.receiver_name,
+    receiver_phone: address.receiver_phone,
+    district: address.district,
+    postal_code: address.postal_code,
+    detail_address: address.detail_address,
+    address_note: address.address_note,
+    type: address.type,
+
+    city: {
+      uuid: address.city.uuid,
+      name: address.city.name,
+    },
+
+    province: {
+      uuid: address.city.province.uuid,
+      name: address.city.province.name,
+    },
+  })
   openEditor.value = true;
 }
 </script>
