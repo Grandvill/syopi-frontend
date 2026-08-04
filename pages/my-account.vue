@@ -2,13 +2,13 @@
   <UContainer class="py-5 flex gap-7">
     <div class="w-44 py-4">
       <div class="flex gap-3 items-center">
-        <!-- <UAvatar
+        <UAvatar
           :src="session.profile.photo_url"
           icon="i-heroicons:user"
           :alt="session.profile.name"
           img-class="object-cover"
-        /> -->
-        <!-- <span>{{ session.profile.name }}</span> -->
+        />
+        <span>{{ session.profile.name }}</span>
       </div>
       <hr class="border-gray-200/50 my-4" />
       <LayoutsSidebar :items="links" class="my-account-sidebar" />
@@ -26,11 +26,11 @@
 <script setup>
 import { UCard } from "#components";
 
-// definePageMeta({
-//   middleware: ["must-auth"],
-// });
+definePageMeta({
+  middleware: ["must-auth"],
+});
 
-// const session = useSession();
+const session = useSession();
 
 const route = useRoute();
 const wrapper = computed(() => {
