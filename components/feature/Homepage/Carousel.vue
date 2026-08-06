@@ -1,22 +1,28 @@
 <template>
-  <UCarousel v-slot="{ item }" ref="carouselRef" :items="items" :ui="{ item: 'basis-full' }" class="rounded-lg overflow-hidden max-w-[796px] max-h-[235px] mx-auto aspect-[3.39/1]" indicators>
+  <UCarousel
+    v-slot="{ item }"
+    ref="carouselRef"
+    :items="items"
+    :ui="{ item: 'basis-full' }"
+    class="rounded-sm overflow-hidden max-w-[796px] max-h-[235px] mx-auto aspect-[3.39/1]"
+    indicators
+  >
     <img :src="item" class="w-full object-cover" draggable="false" />
   </UCarousel>
 </template>
 
 <script setup>
-// untuk items carousel component dari parent component
 defineProps({
   items: {
     type: Array,
-    default: () => ({}),
+    default: () => [],
   },
 });
 
 const carouselRef = ref();
 let intervalId;
 onMounted(() => {
-  setInterval(() => {
+  intervalId = setInterval(() => {
     if (!carouselRef.value) return;
 
     if (carouselRef.value.page === carouselRef.value.pages) {
@@ -27,7 +33,9 @@ onMounted(() => {
   }, 3000);
 });
 
-onBeforeMount(() => clearInterval(intervalId));
+onBeforeUnmount(() => {
+  clearInterval(intervalId);
+});
 </script>
 
 <style lang="scss" scoped></style>

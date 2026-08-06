@@ -2,7 +2,13 @@
   <div class="flex flex-col gap-6 pb-6">
     <section class="banner-section">
       <UContainer>
-        <featureHomepageCarousel :items="items" />
+        <BaseCarousel
+          width="796px"
+          height="235px"
+          aspect-ratio="3.39/1"
+          :items="items"
+          class="mx-auto"
+        />
       </UContainer>
     </section>
     <section class="category-section">
@@ -42,14 +48,21 @@
 </template>
 
 <script setup>
-const items = [
-  'https://picsum.photos/1920/1080?random=1',
-  'https://picsum.photos/1920/1080?random=2',
-  'https://picsum.photos/1920/1080?random=3',
-  'https://picsum.photos/1920/1080?random=4',
-  'https://picsum.photos/1920/1080?random=5',
-  'https://picsum.photos/1920/1080?random=6',
-];
+const nuxtApp = useNuxtApp();
+const session = useSession();
+
+const { data: respSlider } = useApi("/server/api/slider", {
+  key: "slider-banner",
+  getCachedData() {
+    return (
+      nuxtApp.payload.data?.["slider-banner"] ||
+      nuxtApp.static.data?.["slider-banner"]
+    );
+  },
+});
+const items = computed(() =>
+  (respSlider.value?.data || [])?.map((slider) => slider.image)
+);
 </script>
 
 <style scoped>
