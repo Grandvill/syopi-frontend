@@ -19,10 +19,11 @@
             </div>
             <div class="category-section-content">
               <FeatureHomepageCategoryItem
-              v-for="i in 20"
-              :key="`cat-${i}`"
-                title="elektronik"
-                image="/images/kategori/elektronik.png"
+              v-for="cat in categories"
+              :key="`cat-${cat.slug}`"
+              :title="cat.name"
+              :image="cat.icon"
+              :slug="cat.slug"
               />
             </div>
         </div>
@@ -60,6 +61,30 @@ const { data: respSlider } = useApi("/server/api/slider", {
     );
   },
 });
+
+const { data: categories } = useApi("/server/api/category", {
+  key: "category-list",
+  transform(response) {
+    return (response?.data || []).reduce((result, parent) => {
+      result.push(
+        ...parent.childs.map((child) => ({
+          ...child,
+          icon: parent.icon,
+          name: `${parent.name} - ${child.name}`,
+        }))
+      );
+      return result;
+    }, []);
+  },
+  getCachedData() {
+    return (
+      nuxtApp.payload.data?.["category-list"] ||
+      nuxtApp.static.data?.["category-list"]
+    );
+  },
+});
+
+
 const items = computed(() =>
   (respSlider.value?.data || [])?.map((slider) => slider.image)
 );
@@ -85,7 +110,7 @@ const items = computed(() =>
 }
 
 .category-section-content {
-  @apply grid grid-cols-10;
+  @apply grid grid-cols-6;
 }
 
 .product-section-header {

@@ -1,6 +1,11 @@
 <template>
-    <NuxtLink class="category-item" to="/">
-        <img :src="image"/>
+    <NuxtLink class="category-item" :to="{
+        path: '/search',
+        query: {
+            categories: slug
+        }
+    }">
+        <NuxtImg :src="image" format="webp"/>
         <p>{{ title }}</p>
     </NuxtLink>
 </template>
@@ -15,6 +20,10 @@ defineProps({
         type: String,
         default: "",
     },
+    slug: {
+        type: String,
+        default: "",
+    }
 });
 </script>
 
