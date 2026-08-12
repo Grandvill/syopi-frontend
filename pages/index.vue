@@ -35,14 +35,35 @@
           <h2>Rekomendasi</h2>
         </div>
         <div class="product-section-content">
-          <BaseProductCard v-for="i in 36" :key="`product-${i}`" title="Kawabata Sepatu Sandal Kasual Slingback Mules…" price="100000" image="images/rekomendasi/sepatu.png" />
+          <BaseProductCard
+            v-for="product in productList?.data"
+            :key="`product-${product.uuid}`"
+            :title="product.name"
+            :price="product?.price_sale || product?.price"
+            :image="product.image_url"
+            :slug="product.slug"
+            :discount="product?.price_discount_percentage"
+          />
         </div>
       </UContainer>
     </section>
 
     <UContainer>
-      <UButton color="white" class="font-normal px-28">
+      <UButton
+        v-if="!session.token"
+        color="white"
+        class="font-normal px-28"
+        to="/login"
+      >
         Login untuk Lihat Lainnya
+      </UButton>
+      <UButton
+        v-else-if="productList?.next_page_url"
+        color="white"
+        class="font-normal px-28"
+        @click="loadMore"
+      >
+        Lihat Lainnya
       </UButton>
     </UContainer>
   </div>
@@ -84,10 +105,35 @@ const { data: categories } = useApi("/server/api/category", {
   },
 });
 
+const { data: productList, execute } = useApi("/server/api/product", {
+  params: pagination,
+  key: "product-homepage",
+  onResponse({ response }) {
+    if (response.ok) {
+      pagination.value.page = response._data.data?.current_page;
+    }
+  },
+  transform(response) {
+    // return response?.data?.data || []
+    if (pagination.value.page === 1) return response?.data;
+    const newData = response?.data?.data || [];
+    return {
+      ...response.data,
+      data: [...(oldProductData.value?.data || []), ...newData],
+    };
+  },
+  watch: false,
+});
+
 
 const items = computed(() =>
   (respSlider.value?.data || [])?.map((slider) => slider.image)
 );
+
+function loadMore() {
+  pagination.value.page++;
+  execute();
+}
 </script>
 
 <style scoped>

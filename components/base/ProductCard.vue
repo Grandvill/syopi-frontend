@@ -1,7 +1,7 @@
 <template>
   <NuxtLink class="product-card" to="/">
     <div v-if="discount" class="product-discount">-{{ formattedDiscount }}%</div>
-    <img :src="image" />
+    <NuxtImg :src="image" format="webp"/>
     <div class="product-card-detail">
       <p>
         {{ title }}
