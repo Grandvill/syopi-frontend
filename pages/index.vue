@@ -2,30 +2,18 @@
   <div class="flex flex-col gap-6 pb-6">
     <section class="banner-section">
       <UContainer>
-        <BaseCarousel
-          width="796px"
-          height="235px"
-          aspect-ratio="3.39/1"
-          :items="items"
-          class="mx-auto"
-        />
+        <BaseCarousel width="796px" height="235px" aspect-ratio="3.39/1" :items="items" class="mx-auto" />
       </UContainer>
     </section>
     <section class="category-section">
       <UContainer>
         <div class="category-section-card">
-            <div class="category-section-header">
-              <h2>Kategori</h2>
-            </div>
-            <div class="category-section-content">
-              <FeatureHomepageCategoryItem
-              v-for="cat in categories"
-              :key="`cat-${cat.slug}`"
-              :title="cat.name"
-              :image="cat.icon"
-              :slug="cat.slug"
-              />
-            </div>
+          <div class="category-section-header">
+            <h2>Kategori</h2>
+          </div>
+          <div class="category-section-content">
+            <FeatureHomepageCategoryItem v-for="cat in categories" :key="`cat-${cat.slug}`" :title="cat.name" :image="cat.icon" :slug="cat.slug" />
+          </div>
         </div>
       </UContainer>
     </section>
@@ -49,22 +37,8 @@
     </section>
 
     <UContainer>
-      <UButton
-        v-if="!session.token"
-        color="white"
-        class="font-normal px-28"
-        to="/login"
-      >
-        Login untuk Lihat Lainnya
-      </UButton>
-      <UButton
-        v-else-if="productList?.next_page_url"
-        color="white"
-        class="font-normal px-28"
-        @click="loadMore"
-      >
-        Lihat Lainnya
-      </UButton>
+      <UButton v-if="!session.token" color="white" class="font-normal px-28" to="/login"> Login untuk Lihat Lainnya </UButton>
+      <UButton v-else-if="productList?.next_page_url" color="white" class="font-normal px-28" @click="loadMore"> Lihat Lainnya </UButton>
     </UContainer>
   </div>
 </template>
@@ -73,18 +47,19 @@
 const nuxtApp = useNuxtApp();
 const session = useSession();
 
-const { data: respSlider } = useApi("/server/api/slider", {
-  key: "slider-banner",
+const pagination = ref({
+  page: 1,
+});
+
+const { data: respSlider } = useApi('/server/api/slider', {
+  key: 'slider-banner',
   getCachedData() {
-    return (
-      nuxtApp.payload.data?.["slider-banner"] ||
-      nuxtApp.static.data?.["slider-banner"]
-    );
+    return nuxtApp.payload.data?.['slider-banner'] || nuxtApp.static.data?.['slider-banner'];
   },
 });
 
-const { data: categories } = useApi("/server/api/category", {
-  key: "category-list",
+const { data: categories } = useApi('/server/api/category', {
+  key: 'category-list',
   transform(response) {
     return (response?.data || []).reduce((result, parent) => {
       result.push(
@@ -92,22 +67,19 @@ const { data: categories } = useApi("/server/api/category", {
           ...child,
           icon: parent.icon,
           name: `${parent.name} - ${child.name}`,
-        }))
+        })),
       );
       return result;
     }, []);
   },
   getCachedData() {
-    return (
-      nuxtApp.payload.data?.["category-list"] ||
-      nuxtApp.static.data?.["category-list"]
-    );
+    return nuxtApp.payload.data?.['category-list'] || nuxtApp.static.data?.['category-list'];
   },
 });
 
-const { data: productList, execute } = useApi("/server/api/product", {
+const { data: productList, execute } = useApi('/server/api/product', {
   params: pagination,
-  key: "product-homepage",
+  key: 'product-homepage',
   onResponse({ response }) {
     if (response.ok) {
       pagination.value.page = response._data.data?.current_page;
@@ -125,10 +97,7 @@ const { data: productList, execute } = useApi("/server/api/product", {
   watch: false,
 });
 
-
-const items = computed(() =>
-  (respSlider.value?.data || [])?.map((slider) => slider.image)
-);
+const items = computed(() => (respSlider.value?.data || [])?.map((slider) => slider.image));
 
 function loadMore() {
   pagination.value.page++;
