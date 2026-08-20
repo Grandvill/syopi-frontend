@@ -51,6 +51,8 @@ const pagination = ref({
   page: 1,
 });
 
+const { data: oldProductData } = useNuxtData("product-homepage");
+
 const { data: respSlider } = useApi('/server/api/slider', {
   key: 'slider-banner',
   getCachedData() {
