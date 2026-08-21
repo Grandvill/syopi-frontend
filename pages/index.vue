@@ -105,6 +105,11 @@ function loadMore() {
   pagination.value.page++;
   execute();
 }
+
+useSeoMeta({
+  ogImage: () => items.value?.[0],
+  twitterImage: () => items.value?.[0],
+});
 </script>
 
 <style scoped>
