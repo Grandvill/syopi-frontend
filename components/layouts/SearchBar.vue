@@ -1,9 +1,21 @@
-<!-- SearchBar.vue -->
 <template>
-  <div :class="['searchbar', { 'no-padded': !padded }]">
-    <input placeholder="CEK: Flash Sale Rp17 Lokal!" class="search-input" />
-    <UButton icon="i-heroicons:magnifying-glass" class="px-6" v-bind="attribute" />
-  </div>
+  <form
+    :class="[
+      'searchbar',
+      {
+        'no-padded': !padded,
+      },
+    ]"
+    @submit.prevent="handleSearch"
+  >
+    <input v-model="searchInput" placeholder="CEK: Flash Sale Rp17 Lokal!" />
+    <UButton
+      type="submit"
+      icon="i-heroicons:magnifying-glass"
+      class="px-6"
+      v-bind="attribute"
+    />
+  </form>
 </template>
 
 <script setup>
@@ -14,23 +26,43 @@ const props = defineProps({
   },
 });
 
+const router = useRouter();
+const route = useRoute()
+
+const searchInput = ref(route.query?.search || '');
+
 const attribute = computed(() => {
   if (!props.padded) {
     return {
       ui: {
-        rounded: 'rounded-none',
+        rounded: "rounded-none",
       },
     };
   }
   return {};
 });
+
+watch(() => route.query.search, (newSearch) => {
+  searchInput.value = newSearch
+})
+
+function handleSearch() {
+  router.push({
+    path: "/search",
+    query: {
+      ...route.query,
+      search: searchInput.value,
+    },
+  });
+}
 </script>
 
 <style scoped>
-@reference "tailwindcss";
-
 .searchbar {
-  @apply bg-white flex items-center rounded-sm text-black;
+  @apply bg-white;
+  @apply flex items-center;
+  @apply rounded-sm;
+  @apply text-black;
 }
 
 .searchbar:not(.no-padded) {
@@ -41,7 +73,8 @@ const attribute = computed(() => {
   @apply border-2 border-primary;
 }
 
-.search-input {
-  @apply flex-1 pl-3 outline-none text-black placeholder-gray-500 bg-transparent;
+.searchbar input {
+  @apply outline-none pl-3;
+  @apply flex-1;
 }
 </style>
