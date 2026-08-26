@@ -51,7 +51,7 @@ const pagination = ref({
   page: 1,
 });
 
-const { data: oldProductData } = useNuxtData("product-homepage");
+const { data: oldProductData } = useNuxtData('product-homepage');
 
 const { data: respSlider } = useApi('/server/api/slider', {
   key: 'slider-banner',
@@ -79,6 +79,21 @@ const { data: categories } = useApi('/server/api/category', {
   },
 });
 
+// [
+//   {
+//     slug: "microwave",
+//     name: "Parent - Microwave",
+//     description: null,
+//     icon: 'parent-icon'
+//   },
+//   {
+//     slug: "tv",
+//     name: "Parent - TV",
+//     description: null,
+//     icon: 'parent-icon'
+//   },
+// ];
+
 const { data: productList, execute } = useApi('/server/api/product', {
   params: pagination,
   key: 'product-homepage',
@@ -99,6 +114,8 @@ const { data: productList, execute } = useApi('/server/api/product', {
   watch: false,
 });
 
+// 10 product + 10 product
+
 const items = computed(() => (respSlider.value?.data || [])?.map((slider) => slider.image));
 
 function loadMore() {
@@ -118,9 +135,8 @@ useSeoMeta({
 }
 
 .category-section-card {
-  @apply bg-white text-black;
+  @apply bg-white;
 }
-
 .category-section-header {
   @apply p-5;
   @apply border-b border-black/5;

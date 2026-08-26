@@ -9,22 +9,8 @@
     class="max-h-[450px] aspect-[1/1]"
   >
     <template #default="{ item }">
-      <!-- <NuxtImg
-        v-if="item.type === 'img'"
-        :src="item.src"
-        class="w-full aspect-[1/1] object-cover"
-        draggable="false"
-        format="webp"
-      /> -->
-      <img :src="item.src" class="w-full h-full object-cover" />
-
-      <video
-        v-if="item.type === 'video'"
-        class="w-full aspect-[1/1] object-cover"
-        autoplay
-        muted
-        controls
-      >
+      <NuxtImg v-if="item.type === 'img'" :src="item.src" class="w-full aspect-[1/1] object-cover" draggable="false" format="webp" />
+      <video v-if="item.type === 'video'" class="w-full aspect-[1/1] object-cover" autoplay muted controls>
         <source :src="item.src" type="video/mp4" />
         <p>Your browser does not support the video tag.</p>
       </video>
@@ -38,13 +24,11 @@
         item: 'basis-1/5',
       }"
       :prev-button="{
-        class:
-          'text-white bg-black/20 rounded-none px-1 py-3 left-1 shadow-none',
+        class: 'text-white bg-black/20 rounded-none px-1 py-3 left-1 shadow-none',
         icon: 'i-heroicons:chevron-left',
       }"
       :next-button="{
-        class:
-          'text-white bg-black/20 rounded-none px-1 py-3 right-1 shadow-none',
+        class: 'text-white bg-black/20 rounded-none px-1 py-3 right-1 shadow-none',
         icon: 'i-heroicons:chevron-right',
       }"
       arrows
@@ -55,11 +39,7 @@
           v-if="item.type === 'img'"
           :src="item.src"
           class="max-w-[82px] aspect-[1/1] m-1 object-cover"
-          :class="[
-            carouselElement?.page === index + 1
-              ? 'ring-2 ring-primary'
-              : 'ring-0',
-          ]"
+          :class="[carouselElement?.page === index + 1 ? 'ring-2 ring-primary' : 'ring-0']"
           role="button"
           format="webp"
           @click="carouselElement?.select(index + 1)"
@@ -69,11 +49,7 @@
           v-if="item.type === 'video'"
           :src="item.src"
           class="max-w-[82px] aspect-[1/1] m-1 object-cover"
-          :class="[
-            carouselElement?.page === index + 1
-              ? 'ring-2 ring-primary'
-              : 'ring-0',
-          ]"
+          :class="[carouselElement?.page === index + 1 ? 'ring-2 ring-primary' : 'ring-0']"
           role="button"
           @click="carouselElement?.select(index + 1)"
         />
