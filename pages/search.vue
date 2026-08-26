@@ -8,17 +8,9 @@
       <div class="filter-item">
         <h3>Batas Harga</h3>
         <div class="flex gap-2 items-center">
-          <UInput
-            v-model="temporaryPrice.minimum_price"
-            type="number"
-            placeholder="Rp MIN"
-          />
+          <UInput v-model="temporaryPrice.minimum_price" type="number" placeholder="Rp MIN" />
           <div class="h-[1px] bg-gray-300 w-10" />
-          <UInput
-            v-model="temporaryPrice.maximum_price"
-            type="number"
-            placeholder="Rp MAX"
-          />
+          <UInput v-model="temporaryPrice.maximum_price" type="number" placeholder="Rp MAX" />
         </div>
         <UButton block class="py-2" @click="applyFilterPrice">TERAPKAN</UButton>
       </div>
@@ -26,13 +18,7 @@
       <div class="filter-item">
         <h3>Berdasarkan Kategori</h3>
         <div class="flex flex-col gap-2">
-          <UCheckbox
-            v-for="cat in categories"
-            :key="`cat-${cat.slug}`"
-            v-model="formFilter.categories"
-            :label="cat.name"
-            :value="cat.slug"
-          />
+          <UCheckbox v-for="cat in categories" :key="`cat-${cat.slug}`" v-model="formFilter.categories" :label="cat.name" :value="cat.slug" />
         </div>
       </div>
       <hr />
@@ -49,18 +35,8 @@
       <div class="search-sort">
         <div class="search-sort-control">
           <p>Urutkan</p>
-          <UButton
-            :color="formFilter.sorting_price === 'asc' ? 'primary' : 'white'"
-            class="px-6"
-            @click="formFilter.sorting_price = 'asc'"
-            >Termurah</UButton
-          >
-          <UButton
-            :color="formFilter.sorting_price === 'desc' ? 'primary' : 'white'"
-            class="px-6"
-            @click="formFilter.sorting_price = 'desc'"
-            >Termahal</UButton
-          >
+          <UButton :color="formFilter.sorting_price === 'asc' ? 'primary' : 'white'" class="px-6" @click="formFilter.sorting_price = 'asc'">Termurah</UButton>
+          <UButton :color="formFilter.sorting_price === 'desc' ? 'primary' : 'white'" class="px-6" @click="formFilter.sorting_price = 'desc'">Termahal</UButton>
         </div>
         <div v-if="data?.data?.data?.length" class="search-sort-pagination">
           <p>
@@ -68,21 +44,8 @@
             >/{{ data?.data?.last_page || 0 }}
           </p>
           <div>
-            <UButton
-              icon="i-heroicons:chevron-left-20-solid"
-              color="gray"
-              size="xs"
-              :disabled="!data?.data?.prev_page_url"
-              @click="pagination.page--"
-            />
-            <UButton
-              icon="i-heroicons:chevron-right-20-solid"
-              color="gray"
-              size="xs"
-              class="bg-black/5"
-              :disabled="!data?.data?.next_page_url"
-              @click="pagination.page++"
-            />
+            <UButton icon="i-heroicons:chevron-left-20-solid" color="gray" size="xs" :disabled="!data?.data?.prev_page_url" @click="pagination.page--" />
+            <UButton icon="i-heroicons:chevron-right-20-solid" color="gray" size="xs" class="bg-black/5" :disabled="!data?.data?.next_page_url" @click="pagination.page++" />
           </div>
         </div>
       </div>
@@ -108,15 +71,10 @@
             />
           </div>
           <div class="flex justify-center mt-8">
-            <BasePagination
-              v-model="pagination.page"
-              :total="data?.data?.total || 0"
-            />
+            <BasePagination v-model="pagination.page" :total="data?.data?.total || 0" />
           </div>
         </template>
-        <div v-else class="text-center py-4 text-black/65">
-          Tidak ada product yang ditemukan
-        </div>
+        <div v-else class="text-center py-4 text-black/65">Tidak ada product yang ditemukan</div>
       </template>
     </div>
   </UContainer>
@@ -131,21 +89,18 @@ const pagination = ref({
 });
 
 const formFilter = ref({
-  categories:
-    (typeof route.query?.categories === "string"
-      ? [route.query?.categories]
-      : route.query?.categories) || [],
+  categories: (typeof route.query?.categories === 'string' ? [route.query?.categories] : route.query?.categories) || [],
   minimum_price: route.query?.minimum_price || undefined,
   maximum_price: route.query?.maximum_price || undefined,
-  sorting_price: route.query?.sorting_price || "asc",
+  sorting_price: route.query?.sorting_price || 'asc',
 });
 const temporaryPrice = reactive({
   minimum_price: route.query?.minimum_price || undefined,
   maximum_price: route.query?.maximum_price || undefined,
 });
 
-const { data: categories } = useApi("/server/api/category", {
-  key: "category-list",
+const { data: categories } = useApi('/server/api/category', {
+  key: 'category-list',
   transform(response) {
     return (response?.data || []).reduce((result, parent) => {
       result.push(
@@ -153,30 +108,27 @@ const { data: categories } = useApi("/server/api/category", {
           ...child,
           icon: parent.icon,
           name: `${parent.name} - ${child.name}`,
-        }))
+        })),
       );
       return result;
     }, []);
   },
   getCachedData() {
-    return (
-      nuxtApp.payload.data?.["category-list"] ||
-      nuxtApp.static.data?.["category-list"]
-    );
+    return nuxtApp.payload.data?.['category-list'] || nuxtApp.static.data?.['category-list'];
   },
 });
 
-const { data, status } = useApi("/server/api/product", {
+const { data, status } = useApi('/server/api/product', {
   params: computed(() => {
     return {
       search: route.query?.search,
       ...formFilter.value,
       ...pagination.value,
       categories: undefined,
-      "categories[]": formFilter.value.categories,
+      'categories[]': formFilter.value.categories,
     };
   }),
-  dedupe: "defer",
+  dedupe: 'defer',
 });
 
 watch(
@@ -189,7 +141,7 @@ watch(
       },
     });
   },
-  { deep: true }
+  { deep: true },
 );
 
 function applyFilterPrice() {
@@ -202,21 +154,19 @@ function resetFilter() {
     categories: [],
     minimum_price: undefined,
     maximum_price: undefined,
-    sorting_price: "asc",
+    sorting_price: 'asc',
   };
 
   temporaryPrice.minimum_price = undefined;
   temporaryPrice.maximum_price = undefined;
 }
 
-const titleMeta = computed(
-  () => route.query?.search ? `Sedang mencari produk ${route.query?.search}` : `Sedang mencari produk${route.query.categories ? ` ${route.query.categories}` : ''}`
-);
+const titleMeta = computed(() => (route.query?.search ? `Sedang mencari produk ${route.query?.search}` : `Sedang mencari produk${route.query.categories ? ` ${route.query.categories}` : ''}`));
 
 useSeoMeta({
   title: titleMeta,
-  ogTitle: () => `${titleMeta.value} | Syopo`,
-  twitterTitle: () => `${titleMeta.value} | Syopo`,
+  ogTitle: () => `${titleMeta.value} | Syopi`,
+  twitterTitle: () => `${titleMeta.value} | Syopi`,
   description: titleMeta,
   ogDescription: titleMeta,
   twitterDescription: titleMeta,
