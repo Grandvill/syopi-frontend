@@ -6,7 +6,7 @@
         <BaseLogo />
         <LayoutsSearchBar v-if="defaultMeta.showSearch" class="flex-1" />
         <UChip v-if="defaultMeta.showCart" :text="countCart" size="2xl" :show="countCart > 0">
-          <UButton variant="link">
+          <UButton variant="link" to="/cart">
             <IconCart />
           </UButton>
         </UChip>
