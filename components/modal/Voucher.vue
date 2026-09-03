@@ -15,7 +15,7 @@
     >
       <template #default>
         <div class="flex flex-col gap-5">
-          <p class="text-xl">Pilih Voucher Syopo</p>
+          <p class="text-xl">Pilih Voucher Syopi</p>
           <div>
             <div class="bg-[#F8F8F8] p-4 flex gap-3 items-center">
               <span class="text-sm text-black/80">Tambah Voucher</span>
@@ -80,7 +80,7 @@
                     Berakhir dlm: {{ getDiffDay(voucher.end_date) }} hari
                   </span>
                   <span class="text-primary text-sm mt-1">{{
-                    voucher.seller.store_name
+                    voucher.seller?.store_name || "Voucher Syopi"
                   }}</span>
                 </div>
                 <URadio v-model="temporaryVoucher" :value="voucher.code" />
