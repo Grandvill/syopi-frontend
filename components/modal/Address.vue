@@ -153,6 +153,32 @@ const addressList = computed(() => {
   }));
 });
 
+// Saat modal dibuka, kalau cart belum punya alamat, otomatis tandai alamat
+// utama (is_default) supaya user tinggal konfirmasi tanpa memilih manual.
+watch([isOpen, addressList], () => {
+  if (!isOpen.value) return;
+
+  if (model.value?.uuid) {
+    if (addressSelected.value !== model.value.uuid) {
+      addressSelected.value = model.value.uuid;
+    }
+    return;
+  }
+
+  const options = addressList.value;
+  if (!options?.length) return;
+
+  const isStillSelected = options.some(
+    (option) => option.value === addressSelected.value
+  );
+
+  if (!isStillSelected) {
+    const defaultOption =
+      options.find((option) => option.is_default) || options[0];
+    addressSelected.value = defaultOption?.value || "";
+  }
+});
+
 function handleConfirmCourier() {
   execute({
     uuid: addressSelected.value,

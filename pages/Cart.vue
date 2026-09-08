@@ -107,7 +107,6 @@ definePageMeta({
   middleware: ['must-auth'],
 });
 const session = useSession();
-const nuxtApp = useNuxtApp();
 const openVoucher = ref(false);
 
 const useCoin = ref(false);
@@ -119,15 +118,11 @@ const router = useRouter();
 const { data, status } = useApi(`/server/api/cart`, {
   server: false,
   key: 'cart',
-  onResponse({ response }) {
-    if (response.ok) {
-      useCoin.value = !!response._data?.data?.cart?.pay_with_coin;
-    }
-  },
-  getCachedData() {
-    return nuxtApp.payload.data?.['category-list'] || nuxtApp.static.data?.['category-list'];
-  },
 });
+
+watch(data, () => {
+  useCoin.value = !!data.value?.data?.cart?.pay_with_coin;
+}, { immediate: true });
 
 const totalPrice = computed(() => formatNumber(data.value?.data?.cart?.total || 0));
 const totalDiscount = computed(() => {

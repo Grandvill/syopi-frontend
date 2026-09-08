@@ -13,25 +13,30 @@
         <USkeleton class="h-4 w-2/12" />
       </div>
       <div v-else class="flex gap-20 mt-5 items-center">
-        <div>
-          <p class="font-bold">{{ addressSelected?.receiver_name }}</p>
-          <p class="font-bold">{{ addressSelected?.receiver_phone }}</p>
-        </div>
-        <p class="text-black/80">
-          {{ addressSelected?.detail_address }} {{ addressSelected?.district }},
-          {{ addressSelected?.city?.name }},
-          {{ addressSelected?.city?.province?.name }},
-          {{ addressSelected?.postal_code }}
-          {{ addressSelected?.address_note }}
+        <template v-if="addressSelected?.uuid">
+          <div>
+            <p class="font-bold">{{ addressSelected.receiver_name }}</p>
+            <p class="font-bold">{{ addressSelected.receiver_phone }}</p>
+          </div>
+          <p class="text-black/80">
+            {{ addressSelected.detail_address }} {{ addressSelected.district }},
+            {{ addressSelected.city?.name }},
+            {{ addressSelected.city?.province?.name }},
+            {{ addressSelected.postal_code }}
+            {{ addressSelected.address_note }}
+          </p>
+          <UBadge
+            v-if="addressSelected.is_default"
+            variant="outline"
+            class="font-normal"
+            >Utama</UBadge
+          >
+        </template>
+        <p v-else class="flex-1 text-black/55">
+          Belum ada alamat pengiriman dipilih. Silakan pilih alamat terlebih dahulu.
         </p>
-        <UBadge
-          v-if="addressSelected?.is_default"
-          variant="outline"
-          class="font-normal"
-          >Utama</UBadge
-        >
         <UButton variant="link" color="blue" @click="openAddress = true">
-          Ubah
+          {{ addressSelected?.uuid ? "Ubah" : "Pilih Alamat" }}
         </UButton>
       </div>
     </UCard>
@@ -319,7 +324,6 @@ definePageMeta({
   },
   middleware: ['must-auth']
 });
-const nuxtApp = useNuxtApp();
 const router = useRouter();
 
 const session = useSession();
@@ -332,7 +336,7 @@ const openCourier = ref(false);
 const openAddress = ref(false);
 const notes = ref("");
 
-const addressSelected = ref({});
+const addressSelected = ref(null);
 const courierSelected = ref({
   courier: "",
   service: "",
@@ -355,28 +359,30 @@ const paymentList = computed(() => [
 const { data, status } = useApi(`/server/api/cart`, {
   server: false,
   key: "cart",
-  onResponse({ response }) {
-    if (response.ok) {
-      useCoin.value = !!response._data?.data?.cart?.pay_with_coin;
-      addressSelected.value = response._data?.data?.cart?.address || {};
-      courierSelected.value = {
-        courier: response._data?.data?.cart?.courier,
-        service: response._data?.data?.cart?.courier_type,
-      };
-      notes.value = response._data?.data?.items?.[0]?.note;
-
-      if (response._data?.data?.items.length < 1) {
-        router.replace("/cart");
-      }
-    }
-  },
-  getCachedData() {
-    return (
-      nuxtApp.payload.data?.["category-list"] ||
-      nuxtApp.static.data?.["category-list"]
-    );
-  },
 });
+
+// Key "cart" dipakai bersama komponen lain (HeaderOrange / halaman cart),
+// sehingga saat navigasi SPA Nuxt bisa memakai ulang asyncData yang sama TANPA
+// menjalankan onResponse halaman ini. Karena itu state disinkronkan dari `data`,
+// bukan dari onResponse.
+function syncFromCart() {
+  const cartData = data.value?.data;
+  const cart = cartData?.cart;
+
+  useCoin.value = !!cart?.pay_with_coin;
+  addressSelected.value = cart?.address || null;
+  courierSelected.value = {
+    courier: cart?.courier,
+    service: cart?.courier_type,
+  };
+  notes.value = cartData?.items?.[0]?.note;
+
+  if (cartData?.items?.length === 0) {
+    router.replace("/cart");
+  }
+}
+
+watch(data, syncFromCart, { immediate: true });
 
 const product = computed(() => data.value?.data?.items?.[0]);
 
