@@ -61,6 +61,7 @@ const temporaryQty = ref(props.item?.qty || 0);
 const { execute: updateQty, status: statusUpdateQty } = useSubmit(
   computed(() => `/server/api/cart/${props.item.uuid}`),
   {
+    method: "PATCH",
     onResponse({ response }) {
       if (response.ok) {
         refreshNuxtData("cart");
@@ -88,7 +89,6 @@ function handleUpdateQty() {
     formData.append(`variations[${index}][value]`, variant.value);
   });
   formData.append("qty", temporaryQty.value);
-  formData.append("_method", "PATCH");
 
   updateQty(formData);
 }

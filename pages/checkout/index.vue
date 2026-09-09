@@ -389,6 +389,7 @@ const product = computed(() => data.value?.data?.items?.[0]);
 const { execute: updateQty, status: statusUpdateQty } = useSubmit(
   computed(() => `/server/api/cart/${product.value?.uuid}`),
   {
+    method: "PATCH",
     onResponse({ response }) {
       if (response.ok) {
         refreshNuxtData("cart");
@@ -445,7 +446,6 @@ function handleUpdateNotes() {
   });
   formData.append("qty", product.value.qty);
   formData.append("note", notes.value);
-  formData.append("_method", "PATCH");
 
   updateQty(formData);
 }
