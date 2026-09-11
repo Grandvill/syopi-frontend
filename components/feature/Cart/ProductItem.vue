@@ -58,17 +58,9 @@ const props = defineProps({
 
 const temporaryQty = ref(props.item?.qty || 0);
 
-const { execute: updateQty, status: statusUpdateQty } = useSubmit(
-  computed(() => `/server/api/cart/${props.item.uuid}`),
-  {
-    method: "PATCH",
-    onResponse({ response }) {
-      if (response.ok) {
-        refreshNuxtData("cart");
-      }
-    },
-  }
-);
+const session = useSession();
+const toast = useToast();
+const statusUpdateQty = ref("idle");
 const { execute: removeItem, status: statusRemoveItem } = useSubmit(
   computed(() => `/server/api/cart/${props.item.uuid}`),
   {
@@ -81,16 +73,33 @@ const { execute: removeItem, status: statusRemoveItem } = useSubmit(
   }
 );
 
-function handleUpdateQty() {
-  const formData = new FormData();
-
-  props.item?.variations?.forEach((variant, index) => {
-    formData.append(`variations[${index}][label]`, variant.label);
-    formData.append(`variations[${index}][value]`, variant.value);
-  });
-  formData.append("qty", temporaryQty.value);
-
-  updateQty(formData);
+async function handleUpdateQty() {
+  statusUpdateQty.value = "pending";
+  try {
+    // Kirim dengan method POST (bukan PATCH). Backend Laravel menganggapnya
+    // update lewat spoof header X-HTTP-Method-Override.
+    await $fetch(`/server/api/cart/${props.item.uuid}`, {
+      method: "POST",
+      headers: {
+        ...(session.token ? { Authorization: `Bearer ${session.token}` } : {}),
+        "X-HTTP-Method-Override": "PATCH",
+      },
+      body: {
+        variations: props.item?.variations || [],
+        qty: temporaryQty.value,
+        // note ikut dikirim supaya tidak terhapus saat ubah kuantitas
+        note: props.item?.note,
+      },
+    });
+    refreshNuxtData("cart");
+  } catch (err) {
+    toast.add({
+      color: "red",
+      title: err?.data?.meta?.messages?.[0] || "Gagal memperbarui kuantitas",
+    });
+  } finally {
+    statusUpdateQty.value = "idle";
+  }
 }
 </script>
 

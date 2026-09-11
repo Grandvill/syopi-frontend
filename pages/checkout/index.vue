@@ -386,17 +386,8 @@ watch(data, syncFromCart, { immediate: true });
 
 const product = computed(() => data.value?.data?.items?.[0]);
 
-const { execute: updateQty, status: statusUpdateQty } = useSubmit(
-  computed(() => `/server/api/cart/${product.value?.uuid}`),
-  {
-    method: "PATCH",
-    onResponse({ response }) {
-      if (response.ok) {
-        refreshNuxtData("cart");
-      }
-    },
-  }
-);
+const toast = useToast();
+const statusUpdateQty = ref("idle");
 
 const { execute: submitPayWithCoin, status: statusCoin } = useSubmit(
   "/server/api/cart/toggle-coin",
@@ -435,19 +426,34 @@ const totalDiscount = computed(() => {
   return formatNumber(cashback + discount);
 });
 
-function handleUpdateNotes() {
+async function handleUpdateNotes() {
   if (!product.value) return;
 
-  const formData = new FormData();
-
-  product.value?.variations?.forEach((variant, index) => {
-    formData.append(`variations[${index}][label]`, variant.label);
-    formData.append(`variations[${index}][value]`, variant.value);
-  });
-  formData.append("qty", product.value.qty);
-  formData.append("note", notes.value);
-
-  updateQty(formData);
+  statusUpdateQty.value = "pending";
+  try {
+    // Kirim dengan method POST (bukan PATCH). Backend Laravel menganggapnya
+    // update lewat spoof header X-HTTP-Method-Override.
+    await $fetch(`/server/api/cart/${product.value.uuid}`, {
+      method: "POST",
+      headers: {
+        ...(session.token ? { Authorization: `Bearer ${session.token}` } : {}),
+        "X-HTTP-Method-Override": "PATCH",
+      },
+      body: {
+        variations: product.value?.variations || [],
+        qty: product.value.qty,
+        note: notes.value,
+      },
+    });
+    refreshNuxtData("cart");
+  } catch (err) {
+    toast.add({
+      color: "red",
+      title: err?.data?.meta?.messages?.[0] || "Gagal memperbarui catatan",
+    });
+  } finally {
+    statusUpdateQty.value = "idle";
+  }
 }
 
 function handlePayment() {
