@@ -4,7 +4,8 @@
     <UDropdown :items="profileItems">
       <template #default="{ open }">
         <div class="flex gap-2 items-center">
-          <UAvatar icon="i-heroicons:building-storefront" img-class="object-cover" />
+          <UAvatar :src="session.profile.photo_url" icon="i-heroicons:building-storefront" :alt="session.profile.store_name" img-class="object-cover" />
+          <p>{{ session.profile.store_name }}</p>
           <UIcon name="i-heroicons:chevron-down-20-solid" class="w-4 h-4 transition-all" :class="[open && 'rotate-180']" />
         </div>
       </template>
@@ -14,6 +15,7 @@
 
 <script setup>
 const route = useRoute();
+const session = useSession();
 const breadcrumb = computed(() => {
   const defaultBreadcrumb = [{ label: 'Beranda' }];
 
@@ -22,17 +24,6 @@ const breadcrumb = computed(() => {
   }
   return [...defaultBreadcrumb, ...route.meta.breadcrumb];
 });
-// const links = [
-//   {
-//     label: 'Home',
-//   },
-//   {
-//     label: 'Navigation',
-//   },
-//   {
-//     label: 'Breadcrumb',
-//   },
-// ];
 
 const ui = {
   active: 'text-slate-800',
@@ -46,10 +37,12 @@ const profileItems = [
     {
       label: 'Switch to Customer',
       icon: 'i-heroicons:arrow-path',
+      to: '/my-account/profile',
     },
     {
       label: 'Logout',
       icon: 'i-heroicons:arrow-left-start-on-rectangle',
+      click: session.logout,
     },
   ],
 ];

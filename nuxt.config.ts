@@ -36,10 +36,13 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    '/server/**': { proxy: `${process.env.NUXT_BASE_URL}/**` },
-    '/registration/**': { ssr: false }, //menggunakan client side karena ada beberapa library yang tidak support ssr seperti startCountdown
+    '/server/**': { proxy: `${import.meta.env.NUXT_BASE_URL}/**` },
+    '/registration/**': { ssr: false },
+    '/cart': { ssr: false },
+    '/checkout/**': { ssr: false },
+    '/seller/**': { ssr: false },
   },
   image: {
-    domains: [import.meta.env.NUXT_BASE_URL.replace('https://', '')],
-  }
+    domains: [import.meta.env.NUXT_BASE_URL?.replace('https://', '')],
+  },
 });
