@@ -1,9 +1,10 @@
 <template>
-    <NuxtPage />
+  <NuxtPage />
 </template>
 
 <script setup>
 definePageMeta({
-    layout: 'seller',
-})
+  layout: 'seller',
+  middleware: ['must-auth'],
+});
 </script>

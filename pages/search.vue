@@ -165,8 +165,8 @@ const titleMeta = computed(() => (route.query?.search ? `Sedang mencari produk $
 
 useSeoMeta({
   title: titleMeta,
-  ogTitle: () => `${titleMeta.value} | Syopi`,
-  twitterTitle: () => `${titleMeta.value} | Syopi`,
+  ogTitle: () => `${titleMeta.value} | Syopo`,
+  twitterTitle: () => `${titleMeta.value} | Syopo`,
   description: titleMeta,
   ogDescription: titleMeta,
   twitterDescription: titleMeta,
