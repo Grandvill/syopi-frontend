@@ -31,7 +31,7 @@
     >
       <template #default="{ open, item: parent }">
         <div class="flex gap-2 items-center hover:text-primary" role="button">
-          <ReuseItem v-bind="parent" class="flex-1" />
+          <ReuseItem :item="parent.icon" :label="parent.label" class="flex-1" />
           <UIcon
             name="i-heroicons:chevron-down-20-solid"
             class="w-4 h-4 transition-all"
